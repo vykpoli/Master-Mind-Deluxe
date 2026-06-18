@@ -30,10 +30,8 @@
     .palette{padding:12px;position:sticky;top:14px;height:fit-content;max-height:calc(100vh - 28px);overflow:auto}.palette h3{font-size:1rem;margin-bottom:10px}.paletteGrid{display:grid;grid-template-columns:repeat(2,minmax(42px,1fr));gap:8px}.token{cursor:pointer}.token.selected{outline:3px solid rgba(139,92,246,.9);transform:translateY(-2px)}.actions{padding:12px;position:sticky;bottom:10px;z-index:2}.actionsInner{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}.actions .btnRow{margin:0}.message{padding:12px 13px;border-radius:15px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#e9ecff;line-height:1.32;font-size:.95rem}.message.good{border-color:rgba(67,230,129,.45);background:rgba(67,230,129,.11)}.message.bad{border-color:rgba(255,92,122,.45);background:rgba(255,92,122,.1)}
 
     .drawerOverlay{position:fixed;inset:0;background:rgba(0,0,0,.66);display:none;z-index:24;place-items:center;padding:18px}.drawerOverlay.show{display:grid}.drawer{position:fixed;z-index:25;left:50%;top:50%;width:min(520px,calc(100vw - 28px));max-height:min(82vh,720px);padding:18px;transform:translate(-50%,-50%) scale(.96);opacity:0;pointer-events:none;transition:transform .18s ease,opacity .18s ease;overflow:auto}.drawer.show{transform:translate(-50%,-50%) scale(1);opacity:1;pointer-events:auto}.drawerHeader{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}.closeBtn{padding:9px 11px;border-radius:12px}.help p{color:var(--muted);line-height:1.42;margin:8px 0}.help strong{color:#fff}.miniLegend{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}.legendItem{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:.95rem}.legendDot{width:18px;height:18px;border-radius:50%;display:inline-block}.legendDot.green{background:var(--good)}.legendDot.yellow{background:var(--warn)}
-    .mascot{position:relative;overflow:hidden}
-    /* Correccion: Mindy tambien usa la clase .mascot; esta regla evita que .mascot sobreescriba el position:fixed del modal. */
-    .drawer.mascot{position:fixed;overflow:auto}
-.mascot:before{content:"";position:absolute;right:-48px;top:-58px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,.26),transparent 68%)}.mascotTop{display:flex;gap:12px;align-items:center;margin-bottom:10px;position:relative;z-index:1}.mascotAvatar{width:62px;height:62px;border-radius:22px;display:grid;place-items:center;font-size:2rem;background:linear-gradient(135deg,rgba(139,92,246,.9),rgba(34,211,238,.78));box-shadow:0 14px 34px rgba(34,211,238,.18);animation:floatMascot 3.2s ease-in-out infinite}.mascotName{font-weight:900;font-size:1.05rem;letter-spacing:-.02em}.mascotRole{color:var(--muted);font-size:.82rem;margin-top:2px}.mascotBubble{position:relative;z-index:1;background:rgba(7,10,20,.42);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:12px 13px;color:#e9ecff;line-height:1.38;font-size:.95rem}.mascotBubble small{display:block;color:var(--muted);margin-top:8px;line-height:1.35}.mascot .btnRow{position:relative;z-index:1;margin-top:12px}@keyframes floatMascot{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-5px) rotate(2deg)}}
+    .drawer.mascot{position:fixed;overflow:auto}.mascot:before{content:"";position:absolute;right:-48px;top:-58px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,.26),transparent 68%)}.mascotTop{display:flex;gap:12px;align-items:center;margin-bottom:10px;position:relative;z-index:1}.mascotAvatar{width:62px;height:62px;border-radius:22px;display:grid;place-items:center;font-size:2rem;background:linear-gradient(135deg,rgba(139,92,246,.9),rgba(34,211,238,.78));box-shadow:0 14px 34px rgba(34,211,238,.18);animation:floatMascot 3.2s ease-in-out infinite}.mascotName{font-weight:900;font-size:1.05rem;letter-spacing:-.02em}.mascotRole{color:var(--muted);font-size:.82rem;margin-top:2px}.mascotBubble{position:relative;z-index:1;background:rgba(7,10,20,.42);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:12px 13px;color:#e9ecff;line-height:1.38;font-size:.95rem}.mascotBubble small{display:block;color:var(--muted);margin-top:8px;line-height:1.35}.mascot .btnRow{position:relative;z-index:1;margin-top:12px}@keyframes floatMascot{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-5px) rotate(2deg)}}
+    .petStats{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}.petStat{background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:10px;text-align:center}.petStat b{display:block;font-size:1.15rem}.petStat span{display:block;color:var(--muted);font-size:.74rem;margin-top:2px}.mindyShop{position:relative;z-index:1;margin-top:10px;padding:12px;border-radius:18px;background:rgba(255,255,255,.065);border:1px solid rgba(255,255,255,.12)}.mindyShop h4{margin:0 0 8px;font-size:.96rem}.mindyShop p{margin:0 0 10px;color:var(--muted);font-size:.86rem;line-height:1.35}.revealedList{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.revealChip{min-width:34px;height:30px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);font-weight:900}.revealChip.hidden{color:rgba(255,255,255,.32)}
     .modalOverlay{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;place-items:center;padding:18px;z-index:30}.modalOverlay.show{display:grid}.modal{width:min(560px,100%);padding:24px;text-align:center}.modal h2{font-size:2rem;margin:0 0 8px}.modal p{color:var(--muted);line-height:1.5}.reveal{display:flex;justify-content:center;gap:8px;margin:18px 0;flex-wrap:wrap}.shake{animation:shake .28s linear}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}.pop{animation:pop .25s ease}@keyframes pop{from{transform:scale(.92);opacity:.4}to{transform:scale(1);opacity:1}}.srOnly{position:absolute;left:-9999px}
     @media(max-width:940px){:root{--sideW:92px;--railW:48px;--slot:35px;--gap:4px}.app{padding:10px;gap:10px}.hero{grid-template-columns:1fr}.titleBox{min-height:auto}.settings{grid-template-columns:1fr 1fr}.game{gap:7px}.palette{padding:8px;border-radius:18px}.palette h3{display:none}.paletteGrid{grid-template-columns:1fr;gap:6px}.actionsInner{grid-template-columns:1fr}.actions .btnRow{justify-content:center}.message{font-size:.88rem}.railBtn{min-height:50px;font-size:1.2rem}.railBtn span{font-size:.58rem}.feedback{width:40px;grid-template-columns:repeat(2,11px)}}
     @media(max-width:560px){:root{--sideW:54px;--railW:42px;--slot:31px;--gap:3px}.app{padding:7px}.panel,.titleBox{padding:14px}.settings,.statsBox{grid-template-columns:1fr 1fr;gap:7px}.stat{padding:8px}.game{grid-template-columns:var(--railW) minmax(0,1fr) var(--sideW);gap:5px}.board{padding:7px;border-radius:18px}.topGame{margin-bottom:7px}.topGame h2{font-size:1rem}.secretSlot{width:28px;height:28px;border-radius:9px;font-size:.9rem}.guessRow{padding:4px 5px;border-radius:12px;gap:4px;min-height:39px}.slot,.token{font-size:.92rem;border-radius:10px}.feedback{width:31px;grid-template-columns:repeat(2,9px);gap:2px}.peg{width:9px;height:9px}.actions{padding:8px;border-radius:18px}.actions .btnRow button{padding:9px 9px;font-size:.78rem}.message{padding:9px 10px;font-size:.78rem}.railBtn{min-height:44px;padding:5px;border-radius:14px;font-size:1rem}.railBtn span{display:none}.paletteGrid{gap:5px}.subtitle{font-size:.92rem}.statusPills{display:none}h1{font-size:2.35rem}}
@@ -99,8 +97,18 @@
   <aside class="drawer glass mascot" id="assistantDrawer">
     <div class="drawerHeader"><h3 style="margin:0">Mindy</h3><button class="closeBtn" data-close-drawer>✕</button></div>
     <div class="mascotTop"><div class="mascotAvatar" id="mascotAvatar">🦊</div><div><div class="mascotName">Mindy</div><div class="mascotRole">Mascota lógica · ayuda sin spoilers</div></div></div>
+    <div class="petStats">
+      <div class="petStat"><b id="cookieCount">0 🍪</b><span>galletas guardadas</span></div>
+      <div class="petStat"><b id="winReward">+3 🍪</b><span>premio si ganas</span></div>
+    </div>
     <div class="mascotBubble" id="mascotBubble">Empieza una partida y, cuando te atasques, te daré una pista sin decirte el patrón secreto.</div>
-    <div class="btnRow"><button id="petHintBtn">Pedir ayuda a Mindy</button></div>
+    <div class="mindyShop">
+      <h4>Comida para mascotas</h4>
+      <p>Gana galletas al resolver partidas. Puedes gastarlas para que Mindy revele un símbolo del patrón actual.</p>
+      <button id="revealSymbolBtn">Revelar 1 símbolo · <span id="revealCost">4</span> 🍪</button>
+      <div class="revealedList" id="revealedList"></div>
+    </div>
+    <div class="btnRow"><button id="petHintBtn">Pedir ayuda inteligente</button></div>
   </aside>
   <aside class="drawer glass help" id="guideDrawer">
     <div class="drawerHeader"><h3 style="margin:0">Guía rápida</h3><button class="closeBtn" data-close-drawer>✕</button></div>
@@ -156,23 +164,23 @@
     app: $('#app'), difficulty: $('#difficulty'), mode: $('#mode'), repeatToggle: $('#repeatToggle'), soundToggle: $('#soundToggle'), soundToggleGame: $('#soundToggleGame'),
     lenStat: $('#lenStat'), poolStat: $('#poolStat'), triesStat: $('#triesStat'), possStat: $('#possStat'), bestStat: $('#bestStat'), winsStat: $('#winsStat'),
     newGameBtn: $('#newGameBtn'), howBtn: $('#howBtn'), rows: $('#rows'), palette: $('#palette'), turnInfo: $('#turnInfo'), secretPreview: $('#secretPreview'),
-    checkBtn: $('#checkBtn'), clearBtn: $('#clearBtn'), giveUpBtn: $('#giveUpBtn'), message: $('#message'), petHintBtn: $('#petHintBtn'), mascotBubble: $('#mascotBubble'), mascotAvatar: $('#mascotAvatar'),
+    checkBtn: $('#checkBtn'), clearBtn: $('#clearBtn'), giveUpBtn: $('#giveUpBtn'), message: $('#message'), petHintBtn: $('#petHintBtn'), revealSymbolBtn: $('#revealSymbolBtn'), cookieCount: $('#cookieCount'), winReward: $('#winReward'), revealCost: $('#revealCost'), revealedList: $('#revealedList'), mascotBubble: $('#mascotBubble'), mascotAvatar: $('#mascotAvatar'),
     modalOverlay: $('#modalOverlay'), modalTitle: $('#modalTitle'), modalText: $('#modalText'), modalReveal: $('#modalReveal'), modalNew: $('#modalNew'), modalClose: $('#modalClose'), drawerOverlay: $('#drawerOverlay'), assistantDrawer: $('#assistantDrawer'), guideDrawer: $('#guideDrawer'), settingsDrawer: $('#settingsDrawer'), assistantBtn: $('#assistantBtn'), guideBtn: $('#guideBtn'), gameSettingsBtn: $('#gameSettingsBtn'), homeBtn: $('#homeBtn')
   };
-  let state = { difficulty: DIFFICULTIES[1], mode:'colors', repeats:true, sound:true, secret:[], current:[], rows:[], turn:0, selectedSlot:0, playing:false, over:false, available:[] };
+  let state = { difficulty: DIFFICULTIES[1], mode:'colors', repeats:true, sound:true, secret:[], current:[], rows:[], turn:0, selectedSlot:0, playing:false, over:false, available:[], cookies:0, revealedPositions:[] };
   let audioCtx = null;
 
   function init(){
     DIFFICULTIES.forEach(d => { const o=document.createElement('option'); o.value=d.id; o.textContent=`${d.name} · ${d.len} huecos · ${d.pool} símbolos · ${d.tries} intentos`; els.difficulty.appendChild(o); });
     els.difficulty.value = 'facil';
-    loadStats(); bind(); syncSoundToggles(); updateSettings(); renderAll(); setMessage('Elige una dificultad y pulsa Empezar partida. La guía rápida te acompaña durante toda la partida.');
+    loadCookies(); loadStats(); bind(); syncSoundToggles(); updateSettings(); renderAll(); setMessage('Elige una dificultad y pulsa Empezar partida. La guía rápida te acompaña durante toda la partida.');
   }
   function bind(){
     els.difficulty.addEventListener('change', updateSettings); els.mode.addEventListener('change', updateSettings);
     els.repeatToggle.addEventListener('click', () => toggleRepeats()); els.repeatToggle.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleRepeats();}});
     els.soundToggle.addEventListener('click', () => toggleSound()); els.soundToggle.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleSound();}});
     els.soundToggleGame.addEventListener('click', () => toggleSound()); els.soundToggleGame.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleSound();}});
-    els.newGameBtn.addEventListener('click', newGame); els.checkBtn.addEventListener('click', checkGuess); els.clearBtn.addEventListener('click', clearCurrent); els.giveUpBtn.addEventListener('click', giveUp); els.petHintBtn.addEventListener('click', petHint);
+    els.newGameBtn.addEventListener('click', newGame); els.checkBtn.addEventListener('click', checkGuess); els.clearBtn.addEventListener('click', clearCurrent); els.giveUpBtn.addEventListener('click', giveUp); els.petHintBtn.addEventListener('click', petHint); els.revealSymbolBtn.addEventListener('click', revealSymbol);
     els.howBtn.addEventListener('click', showHowTo); els.modalNew.addEventListener('click', () => { closeModal(); newGame(); }); els.modalClose.addEventListener('click', closeModal); els.modalOverlay.addEventListener('click', e => { if(e.target===els.modalOverlay) closeModal(); });
     els.assistantBtn.addEventListener('click', () => openDrawer(els.assistantDrawer));
     els.guideBtn.addEventListener('click', () => openDrawer(els.guideDrawer));
@@ -211,22 +219,34 @@
     state.difficulty = DIFFICULTIES.find(d=>d.id===els.difficulty.value) || DIFFICULTIES[1]; state.mode=els.mode.value;
     state.available = SYMBOLS[state.mode].slice(0,state.difficulty.pool);
     if(!state.repeats && state.difficulty.len > state.available.length){ state.repeats=true; updateToggle(els.repeatToggle,true,'Permitir repetir símbolo','Sin símbolos repetidos'); }
-    els.lenStat.textContent=state.difficulty.len; els.poolStat.textContent=state.available.length; els.triesStat.textContent=state.difficulty.tries; els.possStat.textContent=formatNumber(possibilities()); loadStats(); renderPalette(); renderSecret(false);
+    els.lenStat.textContent=state.difficulty.len; els.poolStat.textContent=state.available.length; els.triesStat.textContent=state.difficulty.tries; els.possStat.textContent=formatNumber(possibilities()); loadStats(); updatePetEconomyUI(); renderPalette(); renderSecret(false);
   }
   function possibilities(){ const n=state.available.length,k=state.difficulty.len; if(state.repeats) return Math.pow(n,k); let r=1; for(let i=0;i<k;i++) r*=n-i; return r; }
   function formatNumber(n){ return new Intl.NumberFormat('es-ES').format(n); }
   function loadStats(){ const key=statsKey(); const s=JSON.parse(localStorage.getItem(key)||'{}'); els.bestStat.textContent=s.best?`${s.best} intentos`:'-'; els.winsStat.textContent=s.wins||0; }
-  function saveWin(tries){ const key=statsKey(); const s=JSON.parse(localStorage.getItem(key)||'{}'); s.wins=(s.wins||0)+1; s.best=s.best?Math.min(s.best,tries):tries; localStorage.setItem(key,JSON.stringify(s)); loadStats(); }
+  function saveWin(tries){ const key=statsKey(); const s=JSON.parse(localStorage.getItem(key)||'{}'); s.wins=(s.wins||0)+1; s.best=s.best?Math.min(s.best,tries):tries; localStorage.setItem(key,JSON.stringify(s)); const reward=cookieReward(); addCookies(reward); loadStats(); return reward; }
+  function cookieReward(){ return ({aprendiz:2,facil:3,normal:4,dificil:6,experto:8,pesadilla:10})[state.difficulty.id] || 3; }
+  function revealPrice(){ return ({aprendiz:3,facil:4,normal:5,dificil:7,experto:9,pesadilla:12})[state.difficulty.id] || 4; }
+  function loadCookies(){ state.cookies = Math.max(0, parseInt(localStorage.getItem('mastermind_vyk_mindy_cookies') || '0', 10) || 0); updatePetEconomyUI(); }
+  function saveCookies(){ localStorage.setItem('mastermind_vyk_mindy_cookies', String(state.cookies)); updatePetEconomyUI(); }
+  function addCookies(n){ state.cookies += n; saveCookies(); }
+  function spendCookies(n){ if(state.cookies<n) return false; state.cookies -= n; saveCookies(); return true; }
+  function updatePetEconomyUI(){ if(els.cookieCount) els.cookieCount.textContent = `${formatNumber(state.cookies)} 🍪`; if(els.winReward) els.winReward.textContent = `+${cookieReward()} 🍪`; if(els.revealCost) els.revealCost.textContent = revealPrice(); renderRevealedList(); }
   function statsKey(){ return `mastermind_vyk_${els.difficulty.value}_${els.mode.value}_${state.repeats?'rep':'norep'}`; }
   function newGame(){
-    unlockAudio(); updateSettings(); closeDrawer(); els.app.classList.add('gameActive'); state.secret = makeSecret(); state.current = Array(state.difficulty.len).fill(null); state.rows=[]; state.turn=1; state.selectedSlot=0; state.playing=true; state.over=false;
+    unlockAudio(); updateSettings(); closeDrawer(); els.app.classList.add('gameActive'); state.secret = makeSecret(); state.current = Array(state.difficulty.len).fill(null); state.rows=[]; state.turn=1; state.selectedSlot=0; state.playing=true; state.over=false; state.revealedPositions=[];
     renderAll(); setMessage(`Partida iniciada: ${state.difficulty.name}. Rellena la fila brillante y pulsa Comprobar.`, ''); setMascot(`Estoy lista. Primer consejo: empieza con ${state.difficulty.len} símbolos distintos para descubrir presencia antes de buscar posiciones.`, '🦊'); blip('start');
   }
   function makeSecret(){ const arr=[]; const pool=[...state.available]; for(let i=0;i<state.difficulty.len;i++){ const idx=Math.floor(Math.random()*pool.length); arr.push(pool[idx]); if(!state.repeats) pool.splice(idx,1); } return arr; }
   function renderAll(){ renderSecret(false); renderRows(); renderPalette(); updateButtons(); }
   function renderSecret(revealed){
     els.secretPreview.innerHTML=''; const len=state.difficulty.len;
-    for(let i=0;i<len;i++){ const d=document.createElement('div'); d.className='secretSlot'; if(revealed && state.secret[i]) drawSymbol(d,state.secret[i]); else d.textContent='?'; els.secretPreview.appendChild(d); }
+    for(let i=0;i<len;i++){ const d=document.createElement('div'); d.className='secretSlot'; if((revealed || state.revealedPositions.includes(i)) && state.secret[i]) drawSymbol(d,state.secret[i]); else d.textContent='?'; els.secretPreview.appendChild(d); }
+    renderRevealedList();
+  }
+  function renderRevealedList(){
+    if(!els.revealedList) return; els.revealedList.innerHTML=''; const len=state.difficulty?.len || 0;
+    for(let i=0;i<len;i++){ const chip=document.createElement('div'); chip.className='revealChip'+(state.revealedPositions.includes(i)?'':' hidden'); if(state.revealedPositions.includes(i) && state.secret[i]) drawSymbol(chip,state.secret[i]); else chip.textContent='?'; chip.title=`Posición ${i+1}`; els.revealedList.appendChild(chip); }
   }
   function renderRows(){
     els.rows.innerHTML=''; const total=state.difficulty.tries;
@@ -262,7 +282,7 @@
     if(!state.playing || state.over){ setMessage('Primero empieza una partida.', 'bad'); blip('error'); return; }
     if(state.current.some(x=>!x)){ setMessage('Te falta rellenar algún hueco antes de comprobar.', 'bad'); shakeBoard(); blip('error'); return; }
     const result = score(state.current,state.secret); state.rows[state.turn-1]={guess:[...state.current], exact:result.exact, near:result.near};
-    if(result.exact===state.difficulty.len){ state.over=true; state.playing=false; renderRows(); renderSecret(true); saveWin(state.turn); setMessage(`¡Perfecto! Has acertado el patrón en ${state.turn} intento${state.turn>1?'s':''}.`, 'good'); blip('win'); showEnd(true); return; }
+    if(result.exact===state.difficulty.len){ state.over=true; state.playing=false; renderRows(); renderSecret(true); const reward=saveWin(state.turn); setMessage(`¡Perfecto! Has acertado el patrón en ${state.turn} intento${state.turn>1?'s':''}. Mindy gana ${reward} galletas.`, 'good'); setMascot(`¡Victoria! Has ganado <strong>${reward} 🍪</strong> para dar de comer a Mindy. Las galletas se quedan guardadas para futuras partidas.`, '🦊'); blip('win'); showEnd(true,reward); return; }
     if(state.turn>=state.difficulty.tries){ state.over=true; state.playing=false; renderRows(); renderSecret(true); setMessage('Se acabaron los intentos. El patrón ya está revelado arriba.', 'bad'); blip('lose'); showEnd(false); return; }
     state.turn++; state.current=Array(state.difficulty.len).fill(null); state.selectedSlot=0; renderRows(); setMessage(`Pista recibida: ${result.exact} exacto(s) y ${result.near} correcto(s) mal colocados. Sigue descartando.`, result.exact||result.near?'':'bad'); setMascot(afterScoreAdvice(result), result.exact ? '🧠' : '🦊'); blip(result.exact?'good':'tap');
   }
@@ -280,10 +300,13 @@
     if(els.mascotAvatar) els.mascotAvatar.textContent = avatar;
   }
   function afterScoreAdvice(result){
-    if(result.exact===0 && result.near===0) return 'Esa pista es muy fuerte: ninguno de esos símbolos sirve. En la siguiente prueba usa símbolos completamente distintos.';
-    if(result.exact>0 && result.near===0) return `Tienes ${result.exact} símbolo(s) perfectamente colocado(s). Prueba cambiar solo una parte de la combinación para aislar qué posición está bien.`;
-    if(result.exact===0 && result.near>0) return `Hay ${result.near} símbolo(s) correctos, pero están mal puestos. Reordénalos y mezcla alguno nuevo si aún quedan dudas.`;
-    return `Buena pista: ${result.exact} exacto(s) y ${result.near} mal colocado(s). Conserva parte de la estructura y rota los sospechosos.`;
+    const rows = state.rows.filter(Boolean);
+    const c = collectCandidates(rows, 12000, 120000);
+    const count = c.items.length ? (c.exhausted ? `más de ${formatNumber(c.items.length)}` : formatNumber(c.items.length)) : 'varias';
+    if(result.exact===0 && result.near===0) return `Pista muy potente: todos los símbolos de esa fila quedan descartados. Ahora quedan ${count} combinación(es) compatibles.`;
+    if(result.exact>0 && result.near===0) return `Hay ${result.exact} exacto(s) y ningún recolocable. Mantén una parte fija y cambia el resto para identificar qué posición está cerrada. Quedan ${count} opción(es) compatibles.`;
+    if(result.exact===0 && result.near>0) return `Hay ${result.near} símbolo(s) correctos, pero ninguno está en su sitio. Rótalos antes de añadir demasiados símbolos nuevos. Quedan ${count} opción(es) compatibles.`;
+    return `Buena pista mixta: ${result.exact} exacto(s) y ${result.near} recolocable(s). Ya conviene probar una jugada que divida posibilidades, no solo una parecida.`;
   }
   function petHint(){
     if(!state.playing || state.over){ setMascot('Empieza una partida y te ayudaré cuando haya algo que analizar.', '💤'); blip('error'); return; }
@@ -298,22 +321,24 @@
   }
   function getCandidateHint(){
     const rows = state.rows.filter(Boolean);
-    const candidates = collectCandidates(rows, 60000, 450000);
+    const candidates = collectCandidates(rows, 70000, 650000);
     if(candidates.exhausted && candidates.items.length===0){
-      return {avatar:'😵', kind:'error', text:'He intentado analizar demasiadas posibilidades. Usa la última pista para hacer una prueba controlada: cambia solo 1 o 2 posiciones, no toda la fila.'};
+      return {avatar:'😵', kind:'error', text:'Hay demasiadas posibilidades para analizarlas con seguridad. Haz una prueba amplia: usa símbolos que todavía no hayas probado o cambia media fila de golpe.'};
     }
     if(candidates.items.length===0){
-      return {avatar:'😵', kind:'error', text:'Algo no cuadra con las pistas guardadas. Prueba a empezar una nueva partida si el tablero parece incoherente.'};
+      return {avatar:'😵', kind:'error', text:'Algo no cuadra con las pistas guardadas. Puede que haya una contradicción en el tablero o una partida antigua cargada mal.'};
     }
     const totalText = candidates.exhausted ? `más de ${formatNumber(candidates.items.length)}` : formatNumber(candidates.items.length);
     if(!candidates.exhausted && candidates.items.length===1){
       const info = safePartialClue(candidates.items[0]);
-      return {avatar:'🤐', kind:'tap', text:`Hay una única solución lógica, así que no te la voy a decir entera. ${info}<small>Ya estás en el punto de deducirlo tú: revisa qué intento redujo más las posibilidades.</small>`};
+      return {avatar:'🤐', kind:'tap', text:`Solo queda una solución compatible. No te la diré entera. ${info}<small>Consejo: mira las posiciones que nunca han recibido verde y recoloca los símbolos amarillos.</small>`};
     }
-    const guess = chooseSafeCandidate(candidates.items);
+    const smart = chooseSmartProbe(candidates.items, rows, candidates.exhausted);
+    const guess = smart.guess;
     const last = rows[rows.length-1];
     const diff = last ? distanceCombo(guess,last.guess) : state.difficulty.len;
-    return {avatar:'🧠', kind:'good', text:`Veo ${totalText} combinaciones compatibles con tus pistas. Una buena prueba sería: ${formatCombo(guess)}.<small>Motivo: encaja con todo lo anterior y cambia ${diff} posición(es) respecto a tu último intento, así obtendrás información nueva sin revelar el patrón.</small>`};
+    const known = state.revealedPositions.length ? ` También he respetado los ${state.revealedPositions.length} símbolo(s) revelado(s) con galletas.` : '';
+    return {avatar:'🧠', kind:'good', text:`Veo ${totalText} combinación(es) compatibles. Prueba: ${formatCombo(guess)}.<small>${smart.reason} Cambia ${diff} posición(es) respecto al último intento.${known}</small>`};
   }
   function collectCandidates(rows, maxItems, maxVisited){
     const items=[]; let visited=0, exhausted=false; const pool=state.available;
@@ -321,10 +346,13 @@
       if(items.length>=maxItems || visited>=maxVisited){ exhausted=true; return; }
       if(arr.length===state.difficulty.len){
         visited++;
+        for(const pos of state.revealedPositions){ if(!arr[pos] || !state.secret[pos] || arr[pos].value!==state.secret[pos].value) return; }
         for(const r of rows){ const sc=score(arr,r.guess); if(sc.exact!==r.exact || sc.near!==r.near) return; }
         items.push(arr.slice()); return;
       }
-      for(const sym of pool){
+      const fixed = state.revealedPositions.includes(arr.length) ? state.secret[arr.length] : null;
+      const choices = fixed ? [fixed] : pool;
+      for(const sym of choices){
         if(!state.repeats && used.has(sym.value)) continue;
         arr.push(sym); used.add(sym.value); build(arr,used); arr.pop(); used.delete(sym.value);
         if(exhausted) return;
@@ -333,18 +361,51 @@
     build([], new Set());
     return {items, exhausted};
   }
-  function chooseSafeCandidate(candidates){
-    const nonSecret = candidates.filter(c=>!sameCombo(c,state.secret));
-    const list = nonSecret.length ? nonSecret : candidates;
-    const last = state.rows.filter(Boolean).slice(-1)[0]?.guess || [];
-    let best=list[0], bestScore=-1;
-    for(const c of list.slice(0,3000)){
-      const d=distanceCombo(c,last);
-      const diversity=new Set(c.map(x=>x.value)).size;
-      const scoreVal=d*3+diversity;
-      if(scoreVal>bestScore){ best=c; bestScore=scoreVal; }
+  function chooseSmartProbe(candidates, rows, exhausted){
+    const last = rows.slice(-1)[0]?.guess || [];
+    const candidatePool = candidates.filter(c=>!sameCombo(c,state.secret));
+    const base = candidatePool.length ? candidatePool : candidates;
+    const evalCandidates = sampleList(base, exhausted ? 140 : 260);
+    const answerSample = sampleList(candidates, exhausted ? 450 : 900);
+    let best = base[0], bestScore = -Infinity, bestWorst = Infinity, bestBuckets = 0;
+    for(const probe of evalCandidates){
+      const buckets = new Map();
+      for(const ans of answerSample){
+        const sc = score(probe, ans); const key = sc.exact+'-'+sc.near;
+        buckets.set(key, (buckets.get(key)||0)+1);
+      }
+      let worst=0, entropy=0;
+      for(const n of buckets.values()){
+        if(n>worst) worst=n;
+        const p=n/answerSample.length; entropy -= p*Math.log2(p);
+      }
+      const diversity = new Set(probe.map(x=>x.value)).size;
+      const movement = distanceCombo(probe,last);
+      const spoilerPenalty = sameCombo(probe,state.secret) ? 999 : 0;
+      const scoreVal = entropy*18 - worst*.04 + diversity*.45 + movement*.35 - spoilerPenalty;
+      if(scoreVal>bestScore || (Math.abs(scoreVal-bestScore)<.0001 && worst<bestWorst)){
+        best=probe; bestScore=scoreVal; bestWorst=worst; bestBuckets=buckets.size;
+      }
     }
-    return best;
+    return {guess:best, reason:`He elegido una jugada que intenta dividir las posibilidades en ${bestBuckets} grupos de respuesta, en vez de simplemente adivinar a ciegas.`};
+  }
+  function sampleList(list, max){
+    if(list.length<=max) return list.slice();
+    const out=[]; const step=list.length/max;
+    for(let i=0;i<max;i++) out.push(list[Math.floor(i*step)]);
+    return out;
+  }
+  function revealSymbol(){
+    if(!state.playing || state.over){ setMascot('Solo puedo revelar símbolos durante una partida en curso.', '💤'); blip('error'); return; }
+    const hidden=[]; for(let i=0;i<state.difficulty.len;i++) if(!state.revealedPositions.includes(i)) hidden.push(i);
+    if(hidden.length===0){ setMascot('Ya has revelado todos los símbolos de esta partida. Ahora toca ordenarlos y cerrar la jugada.', '🦊'); blip('tap'); return; }
+    const cost = revealPrice();
+    if(!spendCookies(cost)){ setMascot(`Necesitas <strong>${cost} 🍪</strong> para revelar un símbolo. Ahora tienes <strong>${formatNumber(state.cookies)} 🍪</strong>. Gana partidas para alimentar a Mindy.`, '🍪'); blip('error'); return; }
+    const pos = hidden[Math.floor(Math.random()*hidden.length)];
+    state.revealedPositions.push(pos); state.revealedPositions.sort((a,b)=>a-b);
+    renderSecret(false); updatePetEconomyUI(); updateButtons();
+    setMascot(`Ñam. He comido <strong>${cost} 🍪</strong> y he revelado la posición <strong>${pos+1}</strong>: ${formatCombo([state.secret[pos]])}.<small>Esto se tendrá en cuenta también en mis próximas pistas inteligentes.</small>`, '🦊');
+    setMessage(`Mindy ha revelado un símbolo en la posición ${pos+1}.`, 'good'); blip('good');
   }
   function safePartialClue(candidate){
     if(state.difficulty.len<=3) return 'Te recomiendo mirar los símbolos que han aparecido con amarillo y recolocarlos con calma.';
@@ -356,11 +417,12 @@
   function distanceCombo(a,b){ return a.reduce((n,x,i)=>n + (!b[i] || b[i].value!==x.value ? 1 : 0),0); }
   function formatCombo(combo){ return '<span style="font-weight:900">' + combo.map(symbolText).join(' · ') + '</span>'; }
   function symbolText(sym){ return sym.color ? sym.label : (sym.text || sym.label); }
-  function updateButtons(){ const on=state.playing&&!state.over; els.checkBtn.disabled=!on; els.clearBtn.disabled=!on; els.giveUpBtn.disabled=!on; els.petHintBtn.disabled=!on; }
+  function updateButtons(){ const on=state.playing&&!state.over; els.checkBtn.disabled=!on; els.clearBtn.disabled=!on; els.giveUpBtn.disabled=!on; els.petHintBtn.disabled=!on; if(els.revealSymbolBtn) els.revealSymbolBtn.disabled=!on || state.revealedPositions.length>=state.difficulty.len; }
   function setMessage(text,type=''){ els.message.className='message '+type; els.message.textContent=text; }
-  function showEnd(win,gaveUp=false){
+  function showEnd(win,rewardOrGaveUp=false){
+    const gaveUp = rewardOrGaveUp === true; const reward = typeof rewardOrGaveUp === 'number' ? rewardOrGaveUp : 0;
     els.modalTitle.textContent = win ? '¡Patrón descubierto!' : gaveUp ? 'Partida abandonada' : 'Se acabaron los intentos';
-    els.modalText.textContent = win ? `Has resuelto ${state.difficulty.name} en ${state.turn} intento${state.turn>1?'s':''}. Posibilidades iniciales: ${formatNumber(possibilities())}.` : `El patrón secreto era este. Había ${formatNumber(possibilities())} combinaciones posibles al empezar.`;
+    els.modalText.textContent = win ? `Has resuelto ${state.difficulty.name} en ${state.turn} intento${state.turn>1?'s':''}. Has ganado ${reward} galleta${reward===1?'':'s'} para Mindy. Total guardado: ${formatNumber(state.cookies)} 🍪.` : `El patrón secreto era este. Había ${formatNumber(possibilities())} combinaciones posibles al empezar.`;
     els.modalReveal.innerHTML=''; state.secret.forEach(sym=>{ const d=document.createElement('div'); d.className='token pop'; drawSymbol(d,sym); els.modalReveal.appendChild(d); });
     els.modalOverlay.classList.add('show'); updateButtons();
   }
