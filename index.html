@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mastermind Deluxe by Vyk</title>
+  <style>
+    :root{
+      --bg1:#0b1020; --bg2:#151a38; --card:rgba(255,255,255,.09); --card2:rgba(255,255,255,.14);
+      --text:#f7f7ff; --muted:#b8bfdc; --accent:#8b5cf6; --accent2:#22d3ee;
+      --good:#43e681; --warn:#ffd166; --bad:#ff5c7a; --shadow:0 24px 80px rgba(0,0,0,.38); --radius:22px;
+      --slot:38px; --gap:6px; --sideW:236px; --railW:64px;
+    }
+    *{box-sizing:border-box} html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);background:#070a14;}
+    body{background:radial-gradient(circle at 12% 12%,rgba(139,92,246,.32),transparent 32%),radial-gradient(circle at 88% 8%,rgba(34,211,238,.24),transparent 34%),radial-gradient(circle at 40% 96%,rgba(255,92,122,.18),transparent 32%),linear-gradient(135deg,var(--bg1),var(--bg2));overflow-x:hidden;}
+    .app{width:min(1420px,100%);margin:0 auto;padding:18px;min-height:100vh;display:flex;flex-direction:column;gap:14px;}
+    .glass{background:linear-gradient(180deg,rgba(255,255,255,.13),rgba(255,255,255,.07));border:1px solid rgba(255,255,255,.15);box-shadow:var(--shadow);border-radius:var(--radius);backdrop-filter:blur(16px);}
+    .hero{display:grid;grid-template-columns:minmax(300px,.9fr) minmax(420px,1.1fr);gap:16px;align-items:stretch;}
+    .app.gameActive .hero{display:none;}
+    .titleBox{padding:26px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;min-height:310px;}
+    .titleBox:after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;right:-90px;top:-110px;background:linear-gradient(135deg,rgba(139,92,246,.6),rgba(34,211,238,.38));filter:blur(3px)}
+    h1{margin:0;font-size:clamp(2.4rem,5vw,5.1rem);line-height:.9;letter-spacing:-.06em;position:relative;z-index:1}.subtitle{color:var(--muted);font-size:1.02rem;line-height:1.45;max-width:680px;position:relative;z-index:1;margin:16px 0 0}.statusPills{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;position:relative;z-index:1}.pill{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.08);padding:8px 11px;border-radius:999px;color:#e9ecff;font-size:.88rem}
+    .panel{padding:20px}.panel h2,.panel h3{margin:0 0 12px;letter-spacing:-.03em}.panel h2{font-size:1.45rem}.panel h3{font-size:1.05rem;color:#fff}
+    .settings{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{display:block;color:var(--muted);font-size:.86rem;margin:0 0 6px}select,.toggleLike{width:100%;border:1px solid rgba(255,255,255,.16);border-radius:15px;background:rgba(7,10,20,.58);color:var(--text);padding:12px 13px;font-size:.96rem;outline:none}select:focus,.toggleLike:focus{border-color:rgba(34,211,238,.7);box-shadow:0 0 0 4px rgba(34,211,238,.12)}.toggleLike{display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}.switch{width:46px;height:26px;border-radius:999px;background:rgba(255,255,255,.18);padding:3px;transition:.2s}.knob{width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s}.toggleLike.on .switch{background:linear-gradient(135deg,var(--accent),var(--accent2))}.toggleLike.on .knob{transform:translateX(20px)}
+    .statsBox{margin-top:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:10px;text-align:center}.stat b{display:block;font-size:1.03rem}.stat span{font-size:.75rem;color:var(--muted)}
+    .btnRow{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}button{border:0;border-radius:15px;padding:12px 14px;font-weight:850;color:#fff;cursor:pointer;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.14);transition:transform .12s,filter .12s,background .12s}button:hover{transform:translateY(-1px);filter:brightness(1.08)}button:active{transform:translateY(1px)}button:disabled{opacity:.45;cursor:not-allowed;transform:none}.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));border:0}.danger{background:linear-gradient(135deg,#ff5c7a,#ff9f1c);border:0}.success{background:linear-gradient(135deg,#19c37d,#22d3ee);border:0}
+
+    .game{display:none;grid-template-columns:var(--railW) minmax(0,1fr) var(--sideW);gap:12px;align-items:stretch;flex:1;min-height:0}.app.gameActive .game{display:grid}.leftRail{display:flex;flex-direction:column;gap:10px;align-items:stretch;position:sticky;top:14px;height:fit-content}.railBtn{width:100%;min-height:58px;padding:8px;border-radius:18px;display:grid;place-items:center;font-size:1.45rem}.railBtn span{display:block;font-size:.64rem;color:var(--muted);font-weight:800;margin-top:2px}.centerStage{min-width:0;display:grid;grid-template-rows:auto auto;gap:10px}.board{padding:12px;min-width:0}.topGame{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap}.topGame h2{font-size:1.18rem;margin:0}.secret{display:flex;gap:5px;align-items:center;flex-wrap:wrap}.secretSlot{width:34px;height:34px;border-radius:12px;background:rgba(0,0,0,.28);border:1px dashed rgba(255,255,255,.22);display:grid;place-items:center;font-size:1.05rem;font-weight:900;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+    .rows{display:flex;flex-direction:column-reverse;gap:5px}.guessRow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;align-items:center;padding:5px 7px;border-radius:15px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);min-height:48px}.guessRow.current{background:rgba(34,211,238,.12);border-color:rgba(34,211,238,.35);box-shadow:0 0 0 3px rgba(34,211,238,.06)}.slots{display:flex;gap:var(--gap);flex-wrap:nowrap;min-width:0}.slot,.token{width:var(--slot);height:var(--slot);border-radius:13px;display:grid;place-items:center;font-size:1.1rem;font-weight:900;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);user-select:none}.slot{cursor:pointer}.slot.active{outline:2px solid rgba(34,211,238,.85);transform:scale(1.04)}.slot.empty{color:rgba(255,255,255,.25)}.feedback{width:52px;display:grid;grid-template-columns:repeat(3,12px);gap:3px;justify-content:center}.peg{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.18)}.peg.exact{background:var(--good);box-shadow:0 0 14px rgba(67,230,129,.45)}.peg.near{background:var(--warn);box-shadow:0 0 14px rgba(255,209,102,.35)}
+    .palette{padding:12px;position:sticky;top:14px;height:fit-content;max-height:calc(100vh - 28px);overflow:auto}.palette h3{font-size:1rem;margin-bottom:10px}.paletteGrid{display:grid;grid-template-columns:repeat(2,minmax(42px,1fr));gap:8px}.token{cursor:pointer}.token.selected{outline:3px solid rgba(139,92,246,.9);transform:translateY(-2px)}.actions{padding:12px;position:sticky;bottom:10px;z-index:2}.actionsInner{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}.actions .btnRow{margin:0}.message{padding:12px 13px;border-radius:15px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#e9ecff;line-height:1.32;font-size:.95rem}.message.good{border-color:rgba(67,230,129,.45);background:rgba(67,230,129,.11)}.message.bad{border-color:rgba(255,92,122,.45);background:rgba(255,92,122,.1)}
+
+    .drawerOverlay{position:fixed;inset:0;background:rgba(0,0,0,.66);display:none;z-index:24;place-items:center;padding:18px}.drawerOverlay.show{display:grid}.drawer{position:fixed;z-index:25;left:50%;top:50%;width:min(520px,calc(100vw - 28px));max-height:min(82vh,720px);padding:18px;transform:translate(-50%,-50%) scale(.96);opacity:0;pointer-events:none;transition:transform .18s ease,opacity .18s ease;overflow:auto}.drawer.show{transform:translate(-50%,-50%) scale(1);opacity:1;pointer-events:auto}.drawerHeader{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}.closeBtn{padding:9px 11px;border-radius:12px}.help p{color:var(--muted);line-height:1.42;margin:8px 0}.help strong{color:#fff}.miniLegend{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}.legendItem{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:.95rem}.legendDot{width:18px;height:18px;border-radius:50%;display:inline-block}.legendDot.green{background:var(--good)}.legendDot.yellow{background:var(--warn)}
+    .mascot{position:relative;overflow:hidden}
+    /* Correccion: Mindy tambien usa la clase .mascot; esta regla evita que .mascot sobreescriba el position:fixed del modal. */
+    .drawer.mascot{position:fixed;overflow:auto}
+.mascot:before{content:"";position:absolute;right:-48px;top:-58px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,.26),transparent 68%)}.mascotTop{display:flex;gap:12px;align-items:center;margin-bottom:10px;position:relative;z-index:1}.mascotAvatar{width:62px;height:62px;border-radius:22px;display:grid;place-items:center;font-size:2rem;background:linear-gradient(135deg,rgba(139,92,246,.9),rgba(34,211,238,.78));box-shadow:0 14px 34px rgba(34,211,238,.18);animation:floatMascot 3.2s ease-in-out infinite}.mascotName{font-weight:900;font-size:1.05rem;letter-spacing:-.02em}.mascotRole{color:var(--muted);font-size:.82rem;margin-top:2px}.mascotBubble{position:relative;z-index:1;background:rgba(7,10,20,.42);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:12px 13px;color:#e9ecff;line-height:1.38;font-size:.95rem}.mascotBubble small{display:block;color:var(--muted);margin-top:8px;line-height:1.35}.mascot .btnRow{position:relative;z-index:1;margin-top:12px}@keyframes floatMascot{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-5px) rotate(2deg)}}
+    .modalOverlay{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;place-items:center;padding:18px;z-index:30}.modalOverlay.show{display:grid}.modal{width:min(560px,100%);padding:24px;text-align:center}.modal h2{font-size:2rem;margin:0 0 8px}.modal p{color:var(--muted);line-height:1.5}.reveal{display:flex;justify-content:center;gap:8px;margin:18px 0;flex-wrap:wrap}.shake{animation:shake .28s linear}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}.pop{animation:pop .25s ease}@keyframes pop{from{transform:scale(.92);opacity:.4}to{transform:scale(1);opacity:1}}.srOnly{position:absolute;left:-9999px}
+    @media(max-width:940px){:root{--sideW:92px;--railW:48px;--slot:35px;--gap:4px}.app{padding:10px;gap:10px}.hero{grid-template-columns:1fr}.titleBox{min-height:auto}.settings{grid-template-columns:1fr 1fr}.game{gap:7px}.palette{padding:8px;border-radius:18px}.palette h3{display:none}.paletteGrid{grid-template-columns:1fr;gap:6px}.actionsInner{grid-template-columns:1fr}.actions .btnRow{justify-content:center}.message{font-size:.88rem}.railBtn{min-height:50px;font-size:1.2rem}.railBtn span{font-size:.58rem}.feedback{width:40px;grid-template-columns:repeat(2,11px)}}
+    @media(max-width:560px){:root{--sideW:54px;--railW:42px;--slot:31px;--gap:3px}.app{padding:7px}.panel,.titleBox{padding:14px}.settings,.statsBox{grid-template-columns:1fr 1fr;gap:7px}.stat{padding:8px}.game{grid-template-columns:var(--railW) minmax(0,1fr) var(--sideW);gap:5px}.board{padding:7px;border-radius:18px}.topGame{margin-bottom:7px}.topGame h2{font-size:1rem}.secretSlot{width:28px;height:28px;border-radius:9px;font-size:.9rem}.guessRow{padding:4px 5px;border-radius:12px;gap:4px;min-height:39px}.slot,.token{font-size:.92rem;border-radius:10px}.feedback{width:31px;grid-template-columns:repeat(2,9px);gap:2px}.peg{width:9px;height:9px}.actions{padding:8px;border-radius:18px}.actions .btnRow button{padding:9px 9px;font-size:.78rem}.message{padding:9px 10px;font-size:.78rem}.railBtn{min-height:44px;padding:5px;border-radius:14px;font-size:1rem}.railBtn span{display:none}.paletteGrid{gap:5px}.subtitle{font-size:.92rem}.statusPills{display:none}h1{font-size:2.35rem}}
+    @media(max-width:390px){:root{--slot:28px;--sideW:48px;--railW:38px}.actions .btnRow{gap:5px}.actions .btnRow button{padding:8px 7px;font-size:.72rem}.secret{display:none}.turnTextSmall{font-size:.76rem!important}}
+  </style>
+</head>
+<body>
+  <div class="app" id="app">
+    <section class="hero">
+      <div class="titleBox glass">
+        <h1>Mastermind<br>Deluxe</h1>
+        <p class="subtitle">Adivina el patrón secreto usando lógica. Configura la partida aquí y, al empezar, la pantalla se convierte en un tablero limpio con las filas centradas y los símbolos siempre visibles.</p>
+        <div class="statusPills">
+          <span class="pill">🎯 Pistas claras</span><span class="pill">🔊 Sonidos incluidos</span><span class="pill">📱 PC y móvil</span><span class="pill">🧠 Mascota asistente</span>
+        </div>
+      </div>
+      <div class="panel glass">
+        <h2>Configurar partida</h2>
+        <div class="settings">
+          <div><label for="difficulty">Dificultad</label><select id="difficulty"></select></div>
+          <div><label for="mode">Tipo de símbolos</label><select id="mode"><option value="colors">Colores</option><option value="emojis">Emojis</option><option value="letters">Letras</option><option value="numbers">Números</option></select></div>
+          <div><label>Repeticiones</label><div id="repeatToggle" class="toggleLike on" tabindex="0" role="button" aria-pressed="true"><span>Permitir repetir símbolo</span><span class="switch"><span class="knob"></span></span></div></div>
+          <div><label>Sonido</label><div id="soundToggle" class="toggleLike on" tabindex="0" role="button" aria-pressed="true"><span>Sonidos activados</span><span class="switch"><span class="knob"></span></span></div></div>
+        </div>
+        <div class="statsBox"><div class="stat"><b id="lenStat">4</b><span>huecos</span></div><div class="stat"><b id="poolStat">6</b><span>símbolos</span></div><div class="stat"><b id="triesStat">10</b><span>intentos</span></div></div>
+        <div class="statsBox"><div class="stat"><b id="possStat">1296</b><span>posibilidades</span></div><div class="stat"><b id="bestStat">-</b><span>mejor marca</span></div><div class="stat"><b id="winsStat">0</b><span>victorias</span></div></div>
+        <div class="btnRow"><button class="primary" id="newGameBtn">Empezar partida</button><button id="howBtn">Cómo se juega</button></div>
+      </div>
+    </section>
+
+    <section class="game">
+      <nav class="leftRail" aria-label="Ayuda del juego">
+        <button class="railBtn" id="assistantBtn" title="Abrir asistente">🦊<span>Mindy</span></button>
+        <button class="railBtn" id="guideBtn" title="Abrir guía">📘<span>Guía</span></button>
+        <button class="railBtn" id="gameSettingsBtn" title="Ajustes rápidos">⚙️<span>Ajustes</span></button>
+        <button class="railBtn" id="homeBtn" title="Volver al inicio">🏠<span>Inicio</span></button>
+      </nav>
+
+      <div class="centerStage">
+        <main class="board glass" aria-live="polite">
+          <div class="topGame">
+            <div><h2>Tablero</h2><div class="turnTextSmall" style="color:var(--muted);font-size:.9rem;margin-top:2px" id="turnInfo">Configura y empieza una partida.</div></div>
+            <div class="secret" id="secretPreview" title="Patrón secreto"></div>
+          </div>
+          <div class="rows" id="rows"></div>
+        </main>
+        <div class="actions glass">
+          <div class="actionsInner">
+            <div class="btnRow"><button class="success" id="checkBtn">Comprobar</button><button id="clearBtn">Limpiar fila</button><button class="danger" id="giveUpBtn">Rendirse</button></div>
+            <div class="message" id="message">Elige una dificultad y pulsa Empezar partida.</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="palette glass">
+        <h3>Símbolos</h3>
+        <div class="paletteGrid" id="palette"></div>
+      </aside>
+    </section>
+  </div>
+
+  <div class="drawerOverlay" id="drawerOverlay"></div>
+  <aside class="drawer glass mascot" id="assistantDrawer">
+    <div class="drawerHeader"><h3 style="margin:0">Mindy</h3><button class="closeBtn" data-close-drawer>✕</button></div>
+    <div class="mascotTop"><div class="mascotAvatar" id="mascotAvatar">🦊</div><div><div class="mascotName">Mindy</div><div class="mascotRole">Mascota lógica · ayuda sin spoilers</div></div></div>
+    <div class="mascotBubble" id="mascotBubble">Empieza una partida y, cuando te atasques, te daré una pista sin decirte el patrón secreto.</div>
+    <div class="btnRow"><button id="petHintBtn">Pedir ayuda a Mindy</button></div>
+  </aside>
+  <aside class="drawer glass help" id="guideDrawer">
+    <div class="drawerHeader"><h3 style="margin:0">Guía rápida</h3><button class="closeBtn" data-close-drawer>✕</button></div>
+    <p><strong>1.</strong> Rellena los huecos de la fila brillante con símbolos.</p>
+    <p><strong>2.</strong> Pulsa <strong>Comprobar</strong> para recibir pistas.</p>
+    <p><strong>3.</strong> Usa las pistas para descartar posibilidades hasta acertar el patrón.</p>
+    <div class="miniLegend"><div class="legendItem"><span class="legendDot green"></span><span><strong>Verde:</strong> símbolo correcto en posición correcta.</span></div><div class="legendItem"><span class="legendDot yellow"></span><span><strong>Amarillo:</strong> símbolo correcto, pero en otra posición.</span></div></div>
+    <p style="font-size:.9rem">Importante: las pistas no dicen qué símbolo concreto has acertado, solo cuántos hay de cada tipo.</p>
+  </aside>
+
+  <aside class="drawer glass help" id="settingsDrawer">
+    <div class="drawerHeader"><h3 style="margin:0">Ajustes rápidos</h3><button class="closeBtn" data-close-drawer>✕</button></div>
+    <p>Estos ajustes no reinician la partida. Sirven para cambiar opciones de comodidad mientras juegas.</p>
+    <div style="margin-top:14px">
+      <label>Sonido</label>
+      <div id="soundToggleGame" class="toggleLike on" tabindex="0" role="button" aria-pressed="true"><span>Sonidos activados</span><span class="switch"><span class="knob"></span></span></div>
+    </div>
+    <p style="font-size:.9rem;margin-top:14px">Para cambiar dificultad, símbolos o repeticiones, usa el botón <strong>Inicio</strong>. Eso abandona la partida actual y vuelve al menú inicial.</p>
+  </aside>
+
+  <div class="modalOverlay" id="modalOverlay">
+    <div class="modal glass">
+      <h2 id="modalTitle">Mastermind</h2>
+      <p id="modalText"></p>
+      <div class="reveal" id="modalReveal"></div>
+      <div class="btnRow" style="justify-content:center"><button class="primary" id="modalNew">Nueva partida</button><button id="modalClose">Cerrar</button></div>
+    </div>
+  </div>
+
+<script>
+(() => {
+  'use strict';
+  const DIFFICULTIES = [
+    {id:'aprendiz', name:'1. Aprendiz', len:3, pool:4, tries:10, desc:'Ideal para aprender.'},
+    {id:'facil', name:'2. Fácil', len:4, pool:6, tries:10, desc:'El clásico suave.'},
+    {id:'normal', name:'3. Normal', len:4, pool:8, tries:9, desc:'Más símbolos, menos margen.'},
+    {id:'dificil', name:'4. Difícil', len:5, pool:8, tries:8, desc:'Patrones largos.'},
+    {id:'experto', name:'5. Experto', len:5, pool:10, tries:7, desc:'Pocas oportunidades.'},
+    {id:'pesadilla', name:'6. Pesadilla', len:6, pool:10, tries:6, desc:'Solo para mentes frías.'}
+  ];
+  const SYMBOLS = {
+    colors: [
+      {label:'Rojo', value:'red', color:'#ef4444'}, {label:'Azul', value:'blue', color:'#3b82f6'}, {label:'Verde', value:'green', color:'#22c55e'}, {label:'Amarillo', value:'yellow', color:'#facc15'},
+      {label:'Morado', value:'purple', color:'#a855f7'}, {label:'Rosa', value:'pink', color:'#ec4899'}, {label:'Naranja', value:'orange', color:'#f97316'}, {label:'Cian', value:'cyan', color:'#22d3ee'},
+      {label:'Blanco', value:'white', color:'#f8fafc'}, {label:'Negro', value:'black', color:'#111827'}
+    ],
+    emojis: ['🐺','🔥','🌊','🌙','⭐','🍀','💎','⚡','🧪','👁️'].map(x=>({label:x,value:x,text:x})),
+    letters: 'ABCDEFGHIJ'.split('').map(x=>({label:x,value:x,text:x})),
+    numbers: '0123456789'.split('').map(x=>({label:x,value:x,text:x}))
+  };
+  const $ = s => document.querySelector(s);
+  const els = {
+    app: $('#app'), difficulty: $('#difficulty'), mode: $('#mode'), repeatToggle: $('#repeatToggle'), soundToggle: $('#soundToggle'), soundToggleGame: $('#soundToggleGame'),
+    lenStat: $('#lenStat'), poolStat: $('#poolStat'), triesStat: $('#triesStat'), possStat: $('#possStat'), bestStat: $('#bestStat'), winsStat: $('#winsStat'),
+    newGameBtn: $('#newGameBtn'), howBtn: $('#howBtn'), rows: $('#rows'), palette: $('#palette'), turnInfo: $('#turnInfo'), secretPreview: $('#secretPreview'),
+    checkBtn: $('#checkBtn'), clearBtn: $('#clearBtn'), giveUpBtn: $('#giveUpBtn'), message: $('#message'), petHintBtn: $('#petHintBtn'), mascotBubble: $('#mascotBubble'), mascotAvatar: $('#mascotAvatar'),
+    modalOverlay: $('#modalOverlay'), modalTitle: $('#modalTitle'), modalText: $('#modalText'), modalReveal: $('#modalReveal'), modalNew: $('#modalNew'), modalClose: $('#modalClose'), drawerOverlay: $('#drawerOverlay'), assistantDrawer: $('#assistantDrawer'), guideDrawer: $('#guideDrawer'), settingsDrawer: $('#settingsDrawer'), assistantBtn: $('#assistantBtn'), guideBtn: $('#guideBtn'), gameSettingsBtn: $('#gameSettingsBtn'), homeBtn: $('#homeBtn')
+  };
+  let state = { difficulty: DIFFICULTIES[1], mode:'colors', repeats:true, sound:true, secret:[], current:[], rows:[], turn:0, selectedSlot:0, playing:false, over:false, available:[] };
+  let audioCtx = null;
+
+  function init(){
+    DIFFICULTIES.forEach(d => { const o=document.createElement('option'); o.value=d.id; o.textContent=`${d.name} · ${d.len} huecos · ${d.pool} símbolos · ${d.tries} intentos`; els.difficulty.appendChild(o); });
+    els.difficulty.value = 'facil';
+    loadStats(); bind(); syncSoundToggles(); updateSettings(); renderAll(); setMessage('Elige una dificultad y pulsa Empezar partida. La guía rápida te acompaña durante toda la partida.');
+  }
+  function bind(){
+    els.difficulty.addEventListener('change', updateSettings); els.mode.addEventListener('change', updateSettings);
+    els.repeatToggle.addEventListener('click', () => toggleRepeats()); els.repeatToggle.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleRepeats();}});
+    els.soundToggle.addEventListener('click', () => toggleSound()); els.soundToggle.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleSound();}});
+    els.soundToggleGame.addEventListener('click', () => toggleSound()); els.soundToggleGame.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleSound();}});
+    els.newGameBtn.addEventListener('click', newGame); els.checkBtn.addEventListener('click', checkGuess); els.clearBtn.addEventListener('click', clearCurrent); els.giveUpBtn.addEventListener('click', giveUp); els.petHintBtn.addEventListener('click', petHint);
+    els.howBtn.addEventListener('click', showHowTo); els.modalNew.addEventListener('click', () => { closeModal(); newGame(); }); els.modalClose.addEventListener('click', closeModal); els.modalOverlay.addEventListener('click', e => { if(e.target===els.modalOverlay) closeModal(); });
+    els.assistantBtn.addEventListener('click', () => openDrawer(els.assistantDrawer));
+    els.guideBtn.addEventListener('click', () => openDrawer(els.guideDrawer));
+    els.gameSettingsBtn.addEventListener('click', () => openDrawer(els.settingsDrawer));
+    els.homeBtn.addEventListener('click', returnHome);
+    els.drawerOverlay.addEventListener('click', closeDrawer);
+    document.querySelectorAll('[data-close-drawer]').forEach(btn => btn.addEventListener('click', closeDrawer));
+    document.addEventListener('keydown', e => { if(e.key === 'Escape'){ closeDrawer(); closeModal(); } });
+  }
+  function openDrawer(drawer){
+    closeModal();
+    [els.assistantDrawer, els.guideDrawer, els.settingsDrawer].forEach(d => d.classList.remove('show'));
+    els.drawerOverlay.classList.add('show');
+    drawer.classList.add('show');
+    setTimeout(() => drawer.querySelector('button, [tabindex], select')?.focus(), 30);
+    blip('tap');
+  }
+  function closeDrawer(){
+    els.drawerOverlay.classList.remove('show');
+    [els.assistantDrawer, els.guideDrawer, els.settingsDrawer].forEach(d => d.classList.remove('show'));
+  }
+  function returnHome(){
+    closeDrawer(); closeModal();
+    state.playing=false; state.over=true; state.current=[]; state.rows=[]; state.turn=0;
+    els.app.classList.remove('gameActive');
+    renderAll(); setMessage('Has vuelto al menú de inicio. Configura la partida y pulsa Empezar partida.');
+    setMascot('Cuando empieces otra partida volveré a ayudarte sin spoilers.', '🦊');
+    blip('clear');
+  }
+
+  function toggleRepeats(){ state.repeats=!state.repeats; updateToggle(els.repeatToggle,state.repeats,'Permitir repetir símbolo','Sin símbolos repetidos'); updateSettings(); blip('tap'); }
+  function toggleSound(){ state.sound=!state.sound; syncSoundToggles(); if(state.sound) blip('tap'); }
+  function syncSoundToggles(){ updateToggle(els.soundToggle,state.sound,'Sonidos activados','Sonidos desactivados'); updateToggle(els.soundToggleGame,state.sound,'Sonidos activados','Sonidos desactivados'); }
+  function updateToggle(el,on,yes,no){ el.classList.toggle('on',on); el.setAttribute('aria-pressed',String(on)); el.querySelector('span:first-child').textContent=on?yes:no; }
+  function updateSettings(){
+    state.difficulty = DIFFICULTIES.find(d=>d.id===els.difficulty.value) || DIFFICULTIES[1]; state.mode=els.mode.value;
+    state.available = SYMBOLS[state.mode].slice(0,state.difficulty.pool);
+    if(!state.repeats && state.difficulty.len > state.available.length){ state.repeats=true; updateToggle(els.repeatToggle,true,'Permitir repetir símbolo','Sin símbolos repetidos'); }
+    els.lenStat.textContent=state.difficulty.len; els.poolStat.textContent=state.available.length; els.triesStat.textContent=state.difficulty.tries; els.possStat.textContent=formatNumber(possibilities()); loadStats(); renderPalette(); renderSecret(false);
+  }
+  function possibilities(){ const n=state.available.length,k=state.difficulty.len; if(state.repeats) return Math.pow(n,k); let r=1; for(let i=0;i<k;i++) r*=n-i; return r; }
+  function formatNumber(n){ return new Intl.NumberFormat('es-ES').format(n); }
+  function loadStats(){ const key=statsKey(); const s=JSON.parse(localStorage.getItem(key)||'{}'); els.bestStat.textContent=s.best?`${s.best} intentos`:'-'; els.winsStat.textContent=s.wins||0; }
+  function saveWin(tries){ const key=statsKey(); const s=JSON.parse(localStorage.getItem(key)||'{}'); s.wins=(s.wins||0)+1; s.best=s.best?Math.min(s.best,tries):tries; localStorage.setItem(key,JSON.stringify(s)); loadStats(); }
+  function statsKey(){ return `mastermind_vyk_${els.difficulty.value}_${els.mode.value}_${state.repeats?'rep':'norep'}`; }
+  function newGame(){
+    unlockAudio(); updateSettings(); closeDrawer(); els.app.classList.add('gameActive'); state.secret = makeSecret(); state.current = Array(state.difficulty.len).fill(null); state.rows=[]; state.turn=1; state.selectedSlot=0; state.playing=true; state.over=false;
+    renderAll(); setMessage(`Partida iniciada: ${state.difficulty.name}. Rellena la fila brillante y pulsa Comprobar.`, ''); setMascot(`Estoy lista. Primer consejo: empieza con ${state.difficulty.len} símbolos distintos para descubrir presencia antes de buscar posiciones.`, '🦊'); blip('start');
+  }
+  function makeSecret(){ const arr=[]; const pool=[...state.available]; for(let i=0;i<state.difficulty.len;i++){ const idx=Math.floor(Math.random()*pool.length); arr.push(pool[idx]); if(!state.repeats) pool.splice(idx,1); } return arr; }
+  function renderAll(){ renderSecret(false); renderRows(); renderPalette(); updateButtons(); }
+  function renderSecret(revealed){
+    els.secretPreview.innerHTML=''; const len=state.difficulty.len;
+    for(let i=0;i<len;i++){ const d=document.createElement('div'); d.className='secretSlot'; if(revealed && state.secret[i]) drawSymbol(d,state.secret[i]); else d.textContent='?'; els.secretPreview.appendChild(d); }
+  }
+  function renderRows(){
+    els.rows.innerHTML=''; const total=state.difficulty.tries;
+    for(let r=1;r<=total;r++){
+      const rowData = state.rows[r-1]; const isCurrent = state.playing && !state.over && r===state.turn;
+      const row=document.createElement('div'); row.className='guessRow'+(isCurrent?' current':'');
+      const slots=document.createElement('div'); slots.className='slots';
+      const values = rowData ? rowData.guess : (isCurrent ? state.current : Array(state.difficulty.len).fill(null));
+      values.forEach((sym,i)=>{ const s=document.createElement('div'); s.className='slot'+(!sym?' empty':'')+(isCurrent&&i===state.selectedSlot?' active':''); s.setAttribute('aria-label',`Hueco ${i+1}`); if(sym) drawSymbol(s,sym); else s.textContent='+'; if(isCurrent){ s.addEventListener('click',()=>{state.selectedSlot=i; renderRows();}); } slots.appendChild(s); });
+      const fb=document.createElement('div'); fb.className='feedback'; const pegs=rowData ? makePegs(rowData.exact,rowData.near,state.difficulty.len) : makePegs(0,0,state.difficulty.len); pegs.forEach(p=>fb.appendChild(p));
+      row.appendChild(slots); row.appendChild(fb); els.rows.appendChild(row);
+    }
+    els.turnInfo.textContent = state.playing && !state.over ? `Intento ${state.turn} de ${state.difficulty.tries}` : 'Configura y empieza una partida.';
+  }
+  function makePegs(exact,near,len){ const pegs=[]; for(let i=0;i<len;i++){ const p=document.createElement('span'); p.className='peg'+(i<exact?' exact':i<exact+near?' near':''); pegs.push(p); } return pegs.sort((a,b)=> (b.className.includes('exact')?2:b.className.includes('near')?1:0) - (a.className.includes('exact')?2:a.className.includes('near')?1:0)); }
+  function renderPalette(){
+    els.palette.innerHTML=''; state.available.forEach(sym=>{ const t=document.createElement('button'); t.type='button'; t.className='token'; t.title=sym.label; drawSymbol(t,sym); t.addEventListener('click',()=>pickSymbol(sym)); els.palette.appendChild(t); });
+  }
+  function drawSymbol(el,sym){
+    el.textContent=''; el.style.background=''; el.style.color='';
+    if(sym.color){ el.style.background = `linear-gradient(135deg, ${sym.color}, ${shade(sym.color,-28)})`; el.style.color = isLight(sym.color) ? '#111827' : '#fff'; el.textContent = sym.label[0]; }
+    else { el.textContent = sym.text || sym.label; }
+  }
+  function pickSymbol(sym){
+    if(!state.playing || state.over){ setMessage('Pulsa Empezar partida antes de colocar símbolos.'); blip('error'); return; }
+    if(!state.repeats && state.current.some(x=>x && x.value===sym.value)){ setMessage('En esta partida no se pueden repetir símbolos. Elige otro diferente.', 'bad'); blip('error'); return; }
+    state.current[state.selectedSlot]=sym;
+    const next=state.current.findIndex(x=>!x); state.selectedSlot = next === -1 ? Math.min(state.selectedSlot+1,state.current.length-1) : next;
+    renderRows(); setMessage('Símbolo colocado. Completa la fila y comprueba la pista.'); blip('tap');
+  }
+  function clearCurrent(){ if(!state.playing||state.over) return; state.current=Array(state.difficulty.len).fill(null); state.selectedSlot=0; renderRows(); setMessage('Fila limpiada. Puedes probar otra combinación.'); blip('clear'); }
+  function checkGuess(){
+    if(!state.playing || state.over){ setMessage('Primero empieza una partida.', 'bad'); blip('error'); return; }
+    if(state.current.some(x=>!x)){ setMessage('Te falta rellenar algún hueco antes de comprobar.', 'bad'); shakeBoard(); blip('error'); return; }
+    const result = score(state.current,state.secret); state.rows[state.turn-1]={guess:[...state.current], exact:result.exact, near:result.near};
+    if(result.exact===state.difficulty.len){ state.over=true; state.playing=false; renderRows(); renderSecret(true); saveWin(state.turn); setMessage(`¡Perfecto! Has acertado el patrón en ${state.turn} intento${state.turn>1?'s':''}.`, 'good'); blip('win'); showEnd(true); return; }
+    if(state.turn>=state.difficulty.tries){ state.over=true; state.playing=false; renderRows(); renderSecret(true); setMessage('Se acabaron los intentos. El patrón ya está revelado arriba.', 'bad'); blip('lose'); showEnd(false); return; }
+    state.turn++; state.current=Array(state.difficulty.len).fill(null); state.selectedSlot=0; renderRows(); setMessage(`Pista recibida: ${result.exact} exacto(s) y ${result.near} correcto(s) mal colocados. Sigue descartando.`, result.exact||result.near?'':'bad'); setMascot(afterScoreAdvice(result), result.exact ? '🧠' : '🦊'); blip(result.exact?'good':'tap');
+  }
+  function score(guess,secret){
+    let exact=0, near=0; const gRest=[], sRest=[];
+    for(let i=0;i<secret.length;i++){ if(guess[i].value===secret[i].value) exact++; else { gRest.push(guess[i].value); sRest.push(secret[i].value); } }
+    const counts={}; sRest.forEach(v=>counts[v]=(counts[v]||0)+1);
+    gRest.forEach(v=>{ if(counts[v]>0){ near++; counts[v]--; } });
+    return {exact,near};
+  }
+  function giveUp(){ if(!state.playing||state.over) return; state.over=true; state.playing=false; renderRows(); renderSecret(true); setMessage('Te has rendido. Mira el patrón secreto y empieza otra cuando quieras.', 'bad'); blip('lose'); showEnd(false,true); }
+
+  function setMascot(text, avatar='🦊'){
+    if(els.mascotBubble) els.mascotBubble.innerHTML = text;
+    if(els.mascotAvatar) els.mascotAvatar.textContent = avatar;
+  }
+  function afterScoreAdvice(result){
+    if(result.exact===0 && result.near===0) return 'Esa pista es muy fuerte: ninguno de esos símbolos sirve. En la siguiente prueba usa símbolos completamente distintos.';
+    if(result.exact>0 && result.near===0) return `Tienes ${result.exact} símbolo(s) perfectamente colocado(s). Prueba cambiar solo una parte de la combinación para aislar qué posición está bien.`;
+    if(result.exact===0 && result.near>0) return `Hay ${result.near} símbolo(s) correctos, pero están mal puestos. Reordénalos y mezcla alguno nuevo si aún quedan dudas.`;
+    return `Buena pista: ${result.exact} exacto(s) y ${result.near} mal colocado(s). Conserva parte de la estructura y rota los sospechosos.`;
+  }
+  function petHint(){
+    if(!state.playing || state.over){ setMascot('Empieza una partida y te ayudaré cuando haya algo que analizar.', '💤'); blip('error'); return; }
+    if(state.rows.length===0){
+      const starter = state.available.slice(0,state.difficulty.len);
+      setMascot(`Primera jugada recomendada: prueba ${formatCombo(starter)}.<small>Motivo: usar símbolos distintos al inicio da más información que repetir a ciegas.</small>`, '🦊');
+      blip('good'); return;
+    }
+    const analysis = getCandidateHint();
+    setMascot(analysis.text, analysis.avatar);
+    blip(analysis.kind || 'good');
+  }
+  function getCandidateHint(){
+    const rows = state.rows.filter(Boolean);
+    const candidates = collectCandidates(rows, 60000, 450000);
+    if(candidates.exhausted && candidates.items.length===0){
+      return {avatar:'😵', kind:'error', text:'He intentado analizar demasiadas posibilidades. Usa la última pista para hacer una prueba controlada: cambia solo 1 o 2 posiciones, no toda la fila.'};
+    }
+    if(candidates.items.length===0){
+      return {avatar:'😵', kind:'error', text:'Algo no cuadra con las pistas guardadas. Prueba a empezar una nueva partida si el tablero parece incoherente.'};
+    }
+    const totalText = candidates.exhausted ? `más de ${formatNumber(candidates.items.length)}` : formatNumber(candidates.items.length);
+    if(!candidates.exhausted && candidates.items.length===1){
+      const info = safePartialClue(candidates.items[0]);
+      return {avatar:'🤐', kind:'tap', text:`Hay una única solución lógica, así que no te la voy a decir entera. ${info}<small>Ya estás en el punto de deducirlo tú: revisa qué intento redujo más las posibilidades.</small>`};
+    }
+    const guess = chooseSafeCandidate(candidates.items);
+    const last = rows[rows.length-1];
+    const diff = last ? distanceCombo(guess,last.guess) : state.difficulty.len;
+    return {avatar:'🧠', kind:'good', text:`Veo ${totalText} combinaciones compatibles con tus pistas. Una buena prueba sería: ${formatCombo(guess)}.<small>Motivo: encaja con todo lo anterior y cambia ${diff} posición(es) respecto a tu último intento, así obtendrás información nueva sin revelar el patrón.</small>`};
+  }
+  function collectCandidates(rows, maxItems, maxVisited){
+    const items=[]; let visited=0, exhausted=false; const pool=state.available;
+    const build=(arr, used)=>{
+      if(items.length>=maxItems || visited>=maxVisited){ exhausted=true; return; }
+      if(arr.length===state.difficulty.len){
+        visited++;
+        for(const r of rows){ const sc=score(arr,r.guess); if(sc.exact!==r.exact || sc.near!==r.near) return; }
+        items.push(arr.slice()); return;
+      }
+      for(const sym of pool){
+        if(!state.repeats && used.has(sym.value)) continue;
+        arr.push(sym); used.add(sym.value); build(arr,used); arr.pop(); used.delete(sym.value);
+        if(exhausted) return;
+      }
+    };
+    build([], new Set());
+    return {items, exhausted};
+  }
+  function chooseSafeCandidate(candidates){
+    const nonSecret = candidates.filter(c=>!sameCombo(c,state.secret));
+    const list = nonSecret.length ? nonSecret : candidates;
+    const last = state.rows.filter(Boolean).slice(-1)[0]?.guess || [];
+    let best=list[0], bestScore=-1;
+    for(const c of list.slice(0,3000)){
+      const d=distanceCombo(c,last);
+      const diversity=new Set(c.map(x=>x.value)).size;
+      const scoreVal=d*3+diversity;
+      if(scoreVal>bestScore){ best=c; bestScore=scoreVal; }
+    }
+    return best;
+  }
+  function safePartialClue(candidate){
+    if(state.difficulty.len<=3) return 'Te recomiendo mirar los símbolos que han aparecido con amarillo y recolocarlos con calma.';
+    const repeated = candidate.length - new Set(candidate.map(x=>x.value)).size;
+    if(repeated>0) return `Pista segura: la solución lógica contiene ${repeated} repetición(es), pero no te diré cuáles.`;
+    return 'Pista segura: la solución lógica no necesita símbolos repetidos.';
+  }
+  function sameCombo(a,b){ return a.length===b.length && a.every((x,i)=>b[i] && x.value===b[i].value); }
+  function distanceCombo(a,b){ return a.reduce((n,x,i)=>n + (!b[i] || b[i].value!==x.value ? 1 : 0),0); }
+  function formatCombo(combo){ return '<span style="font-weight:900">' + combo.map(symbolText).join(' · ') + '</span>'; }
+  function symbolText(sym){ return sym.color ? sym.label : (sym.text || sym.label); }
+  function updateButtons(){ const on=state.playing&&!state.over; els.checkBtn.disabled=!on; els.clearBtn.disabled=!on; els.giveUpBtn.disabled=!on; els.petHintBtn.disabled=!on; }
+  function setMessage(text,type=''){ els.message.className='message '+type; els.message.textContent=text; }
+  function showEnd(win,gaveUp=false){
+    els.modalTitle.textContent = win ? '¡Patrón descubierto!' : gaveUp ? 'Partida abandonada' : 'Se acabaron los intentos';
+    els.modalText.textContent = win ? `Has resuelto ${state.difficulty.name} en ${state.turn} intento${state.turn>1?'s':''}. Posibilidades iniciales: ${formatNumber(possibilities())}.` : `El patrón secreto era este. Había ${formatNumber(possibilities())} combinaciones posibles al empezar.`;
+    els.modalReveal.innerHTML=''; state.secret.forEach(sym=>{ const d=document.createElement('div'); d.className='token pop'; drawSymbol(d,sym); els.modalReveal.appendChild(d); });
+    els.modalOverlay.classList.add('show'); updateButtons();
+  }
+  function showHowTo(){
+    els.modalTitle.textContent='Cómo se juega';
+    els.modalText.innerHTML='El juego crea un patrón secreto. Tú pruebas una fila. Cada comprobación te da pistas: <strong>verde</strong> significa símbolo correcto en el lugar correcto; <strong>amarillo</strong> significa símbolo correcto en otro lugar. No te dice cuáles son, así que debes usar lógica y descarte.';
+    els.modalReveal.innerHTML='';
+    [{text:'🧠'},{text:'+'},{text:'🎯'}].forEach(x=>{ const d=document.createElement('div'); d.className='token'; d.textContent=x.text; els.modalReveal.appendChild(d); });
+    els.modalOverlay.classList.add('show'); blip('tap');
+  }
+  function closeModal(){ els.modalOverlay.classList.remove('show'); }
+  function shakeBoard(){ $('.board').classList.remove('shake'); void $('.board').offsetWidth; $('.board').classList.add('shake'); }
+  function shade(hex, percent){ const n=parseInt(hex.slice(1),16), amt=Math.round(2.55*percent), R=(n>>16)+amt, G=(n>>8&255)+amt, B=(n&255)+amt; return '#'+(0x1000000+(R<255?R<1?0:R:255)*0x10000+(G<255?G<1?0:G:255)*0x100+(B<255?B<1?0:B:255)).toString(16).slice(1); }
+  function isLight(hex){ const n=parseInt(hex.slice(1),16), r=n>>16, g=n>>8&255, b=n&255; return (r*299+g*587+b*114)/1000>150; }
+  function unlockAudio(){ if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)(); if(audioCtx.state==='suspended') audioCtx.resume(); }
+  function blip(kind){
+    if(!state.sound) return; try{ unlockAudio(); const now=audioCtx.currentTime; const patterns={ tap:[[520,.035]], clear:[[260,.045],[320,.045]], start:[[392,.06],[523,.07]], good:[[659,.06],[784,.08]], error:[[140,.08],[110,.09]], win:[[523,.08],[659,.08],[784,.12],[1046,.18]], lose:[[220,.12],[174,.16]] }[kind] || [[440,.05]]; let t=now; patterns.forEach(([freq,dur])=>{ const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.type='sine'; o.frequency.value=freq; g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.12,t+.01); g.gain.exponentialRampToValueAtTime(.0001,t+dur); o.connect(g).connect(audioCtx.destination); o.start(t); o.stop(t+dur+.02); t+=dur+.025; }); }catch(e){}
+  }
+  init();
+})();
+</script>
+</body>
+</html>
