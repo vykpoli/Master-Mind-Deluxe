@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mastermind Deluxe by Vyk</title>
+  <title>Mastermind Deluxe by Vykpoli</title>
   <style>
     :root{
       --bg1:#0b1020; --bg2:#151a38; --card:rgba(255,255,255,.09); --card2:rgba(255,255,255,.14);
@@ -23,6 +23,11 @@
     .panel{padding:20px}.panel h2,.panel h3{margin:0 0 12px;letter-spacing:-.03em}.panel h2{font-size:1.45rem}.panel h3{font-size:1.05rem;color:#fff}
     .settings{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{display:block;color:var(--muted);font-size:.86rem;margin:0 0 6px}select,.toggleLike{width:100%;border:1px solid rgba(255,255,255,.16);border-radius:15px;background:rgba(7,10,20,.58);color:var(--text);padding:12px 13px;font-size:.96rem;outline:none}select:focus,.toggleLike:focus{border-color:rgba(34,211,238,.7);box-shadow:0 0 0 4px rgba(34,211,238,.12)}.toggleLike{display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}.switch{width:46px;height:26px;border-radius:999px;background:rgba(255,255,255,.18);padding:3px;transition:.2s}.knob{width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s}.toggleLike.on .switch{background:linear-gradient(135deg,var(--accent),var(--accent2))}.toggleLike.on .knob{transform:translateX(20px)}
     .statsBox{margin-top:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:10px;text-align:center}.stat b{display:block;font-size:1.03rem}.stat span{font-size:.75rem;color:var(--muted)}
+
+    .volumeControl{margin-top:8px;padding:10px 11px;border-radius:15px;background:rgba(7,10,20,.38);border:1px solid rgba(255,255,255,.11)}
+    .volumeTop{display:flex;justify-content:space-between;align-items:center;gap:10px;color:var(--muted);font-size:.82rem;margin-bottom:7px}.volumeTop b{color:#fff;font-size:.86rem}
+    input[type=range]{width:100%;accent-color:var(--accent2);cursor:pointer}
+    .trackInfo{margin-top:8px;color:var(--muted);font-size:.82rem;line-height:1.35}.trackInfo b{color:#fff}
     .btnRow{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}button{border:0;border-radius:15px;padding:12px 14px;font-weight:850;color:#fff;cursor:pointer;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.14);transition:transform .12s,filter .12s,background .12s}button:hover{transform:translateY(-1px);filter:brightness(1.08)}button:active{transform:translateY(1px)}button:disabled{opacity:.45;cursor:not-allowed;transform:none}.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));border:0}.danger{background:linear-gradient(135deg,#ff5c7a,#ff9f1c);border:0}.success{background:linear-gradient(135deg,#19c37d,#22d3ee);border:0}
 
     .game{display:none;grid-template-columns:var(--railW) minmax(0,1fr) var(--sideW);gap:12px;align-items:stretch;flex:1;min-height:0}.app.gameActive .game{display:grid}.leftRail{display:flex;flex-direction:column;gap:10px;align-items:stretch;position:sticky;top:14px;height:fit-content}.railBtn{width:100%;min-height:58px;padding:8px;border-radius:18px;display:grid;place-items:center;font-size:1.45rem}.railBtn span{display:block;font-size:.64rem;color:var(--muted);font-weight:800;margin-top:2px}.centerStage{min-width:0;display:grid;grid-template-rows:auto auto;gap:10px}.board{padding:12px;min-width:0}.topGame{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap}.topGame h2{font-size:1.18rem;margin:0}.secret{display:flex;gap:5px;align-items:center;flex-wrap:wrap}.secretSlot{width:34px;height:34px;border-radius:12px;background:rgba(0,0,0,.28);border:1px dashed rgba(255,255,255,.22);display:grid;place-items:center;font-size:1.05rem;font-weight:900;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
@@ -30,7 +35,7 @@
     .palette{padding:12px;position:sticky;top:14px;height:fit-content;max-height:calc(100vh - 28px);overflow:auto}.palette h3{font-size:1rem;margin-bottom:10px}.paletteGrid{display:grid;grid-template-columns:repeat(2,minmax(42px,1fr));gap:8px}.token{cursor:pointer}.token.selected{outline:3px solid rgba(139,92,246,.9);transform:translateY(-2px)}.actions{padding:12px;position:sticky;bottom:10px;z-index:2}.actionsInner{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center}.actions .btnRow{margin:0}.message{padding:12px 13px;border-radius:15px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#e9ecff;line-height:1.32;font-size:.95rem}.message.good{border-color:rgba(67,230,129,.45);background:rgba(67,230,129,.11)}.message.bad{border-color:rgba(255,92,122,.45);background:rgba(255,92,122,.1)}
 
     .drawerOverlay{position:fixed;inset:0;background:rgba(0,0,0,.66);display:none;z-index:24;place-items:center;padding:18px}.drawerOverlay.show{display:grid}.drawer{position:fixed;z-index:25;left:50%;top:50%;width:min(520px,calc(100vw - 28px));max-height:min(82vh,720px);padding:18px;transform:translate(-50%,-50%) scale(.96);opacity:0;pointer-events:none;transition:transform .18s ease,opacity .18s ease;overflow:auto}.drawer.show{transform:translate(-50%,-50%) scale(1);opacity:1;pointer-events:auto}.drawerHeader{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}.closeBtn{padding:9px 11px;border-radius:12px}.help p{color:var(--muted);line-height:1.42;margin:8px 0}.help strong{color:#fff}.miniLegend{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}.legendItem{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:.95rem}.legendDot{width:18px;height:18px;border-radius:50%;display:inline-block}.legendDot.green{background:var(--good)}.legendDot.yellow{background:var(--warn)}
-    .drawer.mascot{position:fixed;overflow:auto}.mascot:before{content:"";position:absolute;right:-48px;top:-58px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,.26),transparent 68%)}.mascotTop{display:flex;gap:12px;align-items:center;margin-bottom:10px;position:relative;z-index:1}.mascotAvatar{width:62px;height:62px;border-radius:22px;display:grid;place-items:center;font-size:2rem;background:linear-gradient(135deg,rgba(139,92,246,.9),rgba(34,211,238,.78));box-shadow:0 14px 34px rgba(34,211,238,.18);animation:floatMascot 3.2s ease-in-out infinite}.mascotName{font-weight:900;font-size:1.05rem;letter-spacing:-.02em}.mascotRole{color:var(--muted);font-size:.82rem;margin-top:2px}.mascotBubble{position:relative;z-index:1;background:rgba(7,10,20,.42);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:12px 13px;color:#e9ecff;line-height:1.38;font-size:.95rem}.mascotBubble small{display:block;color:var(--muted);margin-top:8px;line-height:1.35}.mascot .btnRow{position:relative;z-index:1;margin-top:12px}@keyframes floatMascot{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-5px) rotate(2deg)}}
+    .mascot{position:relative;overflow:hidden}.mascot:before{content:"";position:absolute;right:-48px;top:-58px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,.26),transparent 68%)}.mascotTop{display:flex;gap:12px;align-items:center;margin-bottom:10px;position:relative;z-index:1}.mascotAvatar{width:62px;height:62px;border-radius:22px;display:grid;place-items:center;font-size:2rem;background:linear-gradient(135deg,rgba(139,92,246,.9),rgba(34,211,238,.78));box-shadow:0 14px 34px rgba(34,211,238,.18);animation:floatMascot 3.2s ease-in-out infinite}.mascotName{font-weight:900;font-size:1.05rem;letter-spacing:-.02em}.mascotRole{color:var(--muted);font-size:.82rem;margin-top:2px}.mascotBubble{position:relative;z-index:1;background:rgba(7,10,20,.42);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:12px 13px;color:#e9ecff;line-height:1.38;font-size:.95rem}.mascotBubble small{display:block;color:var(--muted);margin-top:8px;line-height:1.35}.mascot .btnRow{position:relative;z-index:1;margin-top:12px}@keyframes floatMascot{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-5px) rotate(2deg)}}
     .petStats{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}.petStat{background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:10px;text-align:center}.petStat b{display:block;font-size:1.15rem}.petStat span{display:block;color:var(--muted);font-size:.74rem;margin-top:2px}.mindyShop{position:relative;z-index:1;margin-top:10px;padding:12px;border-radius:18px;background:rgba(255,255,255,.065);border:1px solid rgba(255,255,255,.12)}.mindyShop h4{margin:0 0 8px;font-size:.96rem}.mindyShop p{margin:0 0 10px;color:var(--muted);font-size:.86rem;line-height:1.35}.revealedList{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.revealChip{min-width:34px;height:30px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);font-weight:900}.revealChip.hidden{color:rgba(255,255,255,.32)}
     .modalOverlay{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;place-items:center;padding:18px;z-index:30}.modalOverlay.show{display:grid}.modal{width:min(560px,100%);padding:24px;text-align:center}.modal h2{font-size:2rem;margin:0 0 8px}.modal p{color:var(--muted);line-height:1.5}.reveal{display:flex;justify-content:center;gap:8px;margin:18px 0;flex-wrap:wrap}.shake{animation:shake .28s linear}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}.pop{animation:pop .25s ease}@keyframes pop{from{transform:scale(.92);opacity:.4}to{transform:scale(1);opacity:1}}.srOnly{position:absolute;left:-9999px}
     @media(max-width:940px){:root{--sideW:92px;--railW:48px;--slot:35px;--gap:4px}.app{padding:10px;gap:10px}.hero{grid-template-columns:1fr}.titleBox{min-height:auto}.settings{grid-template-columns:1fr 1fr}.game{gap:7px}.palette{padding:8px;border-radius:18px}.palette h3{display:none}.paletteGrid{grid-template-columns:1fr;gap:6px}.actionsInner{grid-template-columns:1fr}.actions .btnRow{justify-content:center}.message{font-size:.88rem}.railBtn{min-height:50px;font-size:1.2rem}.railBtn span{font-size:.58rem}.feedback{width:40px;grid-template-columns:repeat(2,11px)}}
@@ -42,10 +47,10 @@
   <div class="app" id="app">
     <section class="hero">
       <div class="titleBox glass">
-        <h1>Mastermind<br>Deluxe</h1>
-        <p class="subtitle">Adivina el patrón secreto usando lógica. Configura la partida aquí y, al empezar, la pantalla se convierte en un tablero limpio con las filas centradas y los símbolos siempre visibles.</p>
+        <h1>Mastermind<br>Deluxe<br>By<br>Vykpoli</h1>
+        <p class="subtitle">Adivina el patrón secreto usando lógica. Elige la dificultad, el tipo de símbolos y resuelve la combinación antes de quedarte sin intentos.</p>
         <div class="statusPills">
-          <span class="pill">🎯 Pistas claras</span><span class="pill">🔊 Sonidos incluidos</span><span class="pill">📱 PC y móvil</span><span class="pill">🧠 Mascota asistente</span>
+          <span class="pill">🎯 Pistas claras</span><span class="pill">🔊 Sonidos incluidos</span><span class="pill">🎵 Banda sonora</span><span class="pill">📱 PC y móvil</span><span class="pill">🧠 Mascota asistente</span>
         </div>
       </div>
       <div class="panel glass">
@@ -55,6 +60,9 @@
           <div><label for="mode">Tipo de símbolos</label><select id="mode"><option value="colors">Colores</option><option value="emojis">Emojis</option><option value="letters">Letras</option><option value="numbers">Números</option></select></div>
           <div><label>Repeticiones</label><div id="repeatToggle" class="toggleLike on" tabindex="0" role="button" aria-pressed="true"><span>Permitir repetir símbolo</span><span class="switch"><span class="knob"></span></span></div></div>
           <div><label>Sonido</label><div id="soundToggle" class="toggleLike on" tabindex="0" role="button" aria-pressed="true"><span>Sonidos activados</span><span class="switch"><span class="knob"></span></span></div></div>
+          <div><label>Música</label><div id="musicToggle" class="toggleLike on" tabindex="0" role="button" aria-pressed="true"><span>Música activada</span><span class="switch"><span class="knob"></span></span></div></div>
+          <div class="volumeControl"><div class="volumeTop"><b>Volumen efectos</b><span id="soundVolumeLabel">70%</span></div><input id="soundVolume" type="range" min="0" max="100" value="70"></div>
+          <div class="volumeControl"><div class="volumeTop"><b>Volumen música</b><span id="musicVolumeLabel">65%</span></div><input id="musicVolume" type="range" min="0" max="100" value="65"><div class="trackInfo">🎧 Canción: <b id="trackNameHome">Laguna Lofi</b></div></div>
         </div>
         <div class="statsBox"><div class="stat"><b id="lenStat">4</b><span>huecos</span></div><div class="stat"><b id="poolStat">6</b><span>símbolos</span></div><div class="stat"><b id="triesStat">10</b><span>intentos</span></div></div>
         <div class="statsBox"><div class="stat"><b id="possStat">1296</b><span>posibilidades</span></div><div class="stat"><b id="bestStat">-</b><span>mejor marca</span></div><div class="stat"><b id="winsStat">0</b><span>victorias</span></div></div>
@@ -73,7 +81,7 @@
       <div class="centerStage">
         <main class="board glass" aria-live="polite">
           <div class="topGame">
-            <div><h2>Tablero</h2><div class="turnTextSmall" style="color:var(--muted);font-size:.9rem;margin-top:2px" id="turnInfo">Configura y empieza una partida.</div></div>
+            <div><h2>Tablero</h2><div class="turnTextSmall" style="color:var(--muted);font-size:.9rem;margin-top:2px" id="turnInfo">Elige una dificultad y pulsa Empezar partida.</div></div>
             <div class="secret" id="secretPreview" title="Patrón secreto"></div>
           </div>
           <div class="rows" id="rows"></div>
@@ -121,12 +129,19 @@
 
   <aside class="drawer glass help" id="settingsDrawer">
     <div class="drawerHeader"><h3 style="margin:0">Ajustes rápidos</h3><button class="closeBtn" data-close-drawer>✕</button></div>
-    <p>Estos ajustes no reinician la partida. Sirven para cambiar opciones de comodidad mientras juegas.</p>
+    <p>Ajusta el sonido y la música a tu gusto.</p>
     <div style="margin-top:14px">
       <label>Sonido</label>
       <div id="soundToggleGame" class="toggleLike on" tabindex="0" role="button" aria-pressed="true"><span>Sonidos activados</span><span class="switch"><span class="knob"></span></span></div>
     </div>
-    <p style="font-size:.9rem;margin-top:14px">Para cambiar dificultad, símbolos o repeticiones, usa el botón <strong>Inicio</strong>. Eso abandona la partida actual y vuelve al menú inicial.</p>
+    <div style="margin-top:14px">
+      <label>Música</label>
+      <div id="musicToggleGame" class="toggleLike on" tabindex="0" role="button" aria-pressed="true"><span>Música activada</span><span class="switch"><span class="knob"></span></span></div>
+    </div>
+    <div class="volumeControl"><div class="volumeTop"><b>Volumen efectos</b><span id="soundVolumeLabelGame">70%</span></div><input id="soundVolumeGame" type="range" min="0" max="100" value="70"></div>
+    <div class="volumeControl"><div class="volumeTop"><b>Volumen música</b><span id="musicVolumeLabelGame">65%</span></div><input id="musicVolumeGame" type="range" min="0" max="100" value="65"><div class="trackInfo">🎧 Canción actual: <b id="trackNameGame">Laguna Lofi</b></div></div>
+    <div class="btnRow"><button id="nextTrackBtn">Cambiar canción chill</button></div>
+    <p style="font-size:.9rem;margin-top:14px">Para cambiar la dificultad, los símbolos o las repeticiones, vuelve al <strong>Inicio</strong>.</p>
   </aside>
 
   <div class="modalOverlay" id="modalOverlay">
@@ -161,25 +176,36 @@
   };
   const $ = s => document.querySelector(s);
   const els = {
-    app: $('#app'), difficulty: $('#difficulty'), mode: $('#mode'), repeatToggle: $('#repeatToggle'), soundToggle: $('#soundToggle'), soundToggleGame: $('#soundToggleGame'),
+    app: $('#app'), difficulty: $('#difficulty'), mode: $('#mode'), repeatToggle: $('#repeatToggle'), soundToggle: $('#soundToggle'), soundToggleGame: $('#soundToggleGame'), musicToggle: $('#musicToggle'), musicToggleGame: $('#musicToggleGame'), soundVolume: $('#soundVolume'), soundVolumeGame: $('#soundVolumeGame'), musicVolume: $('#musicVolume'), musicVolumeGame: $('#musicVolumeGame'), soundVolumeLabel: $('#soundVolumeLabel'), soundVolumeLabelGame: $('#soundVolumeLabelGame'), musicVolumeLabel: $('#musicVolumeLabel'), musicVolumeLabelGame: $('#musicVolumeLabelGame'), trackNameHome: $('#trackNameHome'), trackNameGame: $('#trackNameGame'), nextTrackBtn: $('#nextTrackBtn'),
     lenStat: $('#lenStat'), poolStat: $('#poolStat'), triesStat: $('#triesStat'), possStat: $('#possStat'), bestStat: $('#bestStat'), winsStat: $('#winsStat'),
     newGameBtn: $('#newGameBtn'), howBtn: $('#howBtn'), rows: $('#rows'), palette: $('#palette'), turnInfo: $('#turnInfo'), secretPreview: $('#secretPreview'),
     checkBtn: $('#checkBtn'), clearBtn: $('#clearBtn'), giveUpBtn: $('#giveUpBtn'), message: $('#message'), petHintBtn: $('#petHintBtn'), revealSymbolBtn: $('#revealSymbolBtn'), cookieCount: $('#cookieCount'), winReward: $('#winReward'), revealCost: $('#revealCost'), revealedList: $('#revealedList'), mascotBubble: $('#mascotBubble'), mascotAvatar: $('#mascotAvatar'),
     modalOverlay: $('#modalOverlay'), modalTitle: $('#modalTitle'), modalText: $('#modalText'), modalReveal: $('#modalReveal'), modalNew: $('#modalNew'), modalClose: $('#modalClose'), drawerOverlay: $('#drawerOverlay'), assistantDrawer: $('#assistantDrawer'), guideDrawer: $('#guideDrawer'), settingsDrawer: $('#settingsDrawer'), assistantBtn: $('#assistantBtn'), guideBtn: $('#guideBtn'), gameSettingsBtn: $('#gameSettingsBtn'), homeBtn: $('#homeBtn')
   };
-  let state = { difficulty: DIFFICULTIES[1], mode:'colors', repeats:true, sound:true, secret:[], current:[], rows:[], turn:0, selectedSlot:0, playing:false, over:false, available:[], cookies:0, revealedPositions:[] };
+  let state = { difficulty: DIFFICULTIES[1], mode:'colors', repeats:true, sound:true, music:true, soundVolume:.70, musicVolume:.65, trackIndex:0, secret:[], current:[], rows:[], turn:0, selectedSlot:0, playing:false, over:false, available:[], cookies:0, revealedPositions:[] };
   let audioCtx = null;
+  let musicTimer = null, musicMaster = null, musicFilter = null, musicDelay = null, musicDelayGain = null, musicBeat = 0, musicBars = 0;
+  const LOFI_TRACKS = [
+    {name:'Laguna Lofi', bpm:72, progression:[[261.63,311.13,392.00],[196.00,246.94,329.63],[220.00,261.63,349.23],[174.61,220.00,293.66]], bass:[130.81,98.00,110.00,87.31], melody:[null,392,null,466.16,523.25,null,466.16,null,392,null,349.23,null,329.63,null,392,null]},
+    {name:'Noche de Neón', bpm:68, progression:[[220.00,261.63,329.63],[164.81,207.65,261.63],[196.00,246.94,293.66],[174.61,220.00,261.63]], bass:[110.00,82.41,98.00,87.31], melody:[329.63,null,392,null,440,null,392,null,349.23,null,329.63,null,293.66,null,329.63,null]},
+    {name:'Café y Pistas', bpm:76, progression:[[293.66,349.23,440.00],[220.00,277.18,349.23],[246.94,293.66,369.99],[196.00,246.94,329.63]], bass:[146.83,110.00,123.47,98.00], melody:[null,440,493.88,null,523.25,null,493.88,null,440,null,392,null,369.99,null,440,null]}
+  ];
 
   function init(){
     DIFFICULTIES.forEach(d => { const o=document.createElement('option'); o.value=d.id; o.textContent=`${d.name} · ${d.len} huecos · ${d.pool} símbolos · ${d.tries} intentos`; els.difficulty.appendChild(o); });
     els.difficulty.value = 'facil';
-    loadCookies(); loadStats(); bind(); syncSoundToggles(); updateSettings(); renderAll(); setMessage('Elige una dificultad y pulsa Empezar partida. La guía rápida te acompaña durante toda la partida.');
+    loadPrefs(); loadCookies(); loadStats(); bind(); syncSoundToggles(); syncMusicToggles(); syncVolumeControls(); syncTrackName(); updateSettings(); renderAll(); setMessage('Elige una dificultad y pulsa Empezar partida. La guía rápida te acompaña durante toda la partida.');
   }
   function bind(){
     els.difficulty.addEventListener('change', updateSettings); els.mode.addEventListener('change', updateSettings);
     els.repeatToggle.addEventListener('click', () => toggleRepeats()); els.repeatToggle.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleRepeats();}});
     els.soundToggle.addEventListener('click', () => toggleSound()); els.soundToggle.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleSound();}});
     els.soundToggleGame.addEventListener('click', () => toggleSound()); els.soundToggleGame.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleSound();}});
+    els.musicToggle.addEventListener('click', () => toggleMusic()); els.musicToggle.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleMusic();}});
+    els.musicToggleGame.addEventListener('click', () => toggleMusic()); els.musicToggleGame.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleMusic();}});
+    [els.soundVolume, els.soundVolumeGame].forEach(el => el && el.addEventListener('input', e => setSoundVolume(Number(e.target.value)/100)));
+    [els.musicVolume, els.musicVolumeGame].forEach(el => el && el.addEventListener('input', e => setMusicVolume(Number(e.target.value)/100)));
+    els.nextTrackBtn?.addEventListener('click', nextTrack);
     els.newGameBtn.addEventListener('click', newGame); els.checkBtn.addEventListener('click', checkGuess); els.clearBtn.addEventListener('click', clearCurrent); els.giveUpBtn.addEventListener('click', giveUp); els.petHintBtn.addEventListener('click', petHint); els.revealSymbolBtn.addEventListener('click', revealSymbol);
     els.howBtn.addEventListener('click', showHowTo); els.modalNew.addEventListener('click', () => { closeModal(); newGame(); }); els.modalClose.addEventListener('click', closeModal); els.modalOverlay.addEventListener('click', e => { if(e.target===els.modalOverlay) closeModal(); });
     els.assistantBtn.addEventListener('click', () => openDrawer(els.assistantDrawer));
@@ -206,15 +232,47 @@
     closeDrawer(); closeModal();
     state.playing=false; state.over=true; state.current=[]; state.rows=[]; state.turn=0;
     els.app.classList.remove('gameActive');
-    renderAll(); setMessage('Has vuelto al menú de inicio. Configura la partida y pulsa Empezar partida.');
+    renderAll(); setMessage('Has vuelto al menú de inicio.');
     setMascot('Cuando empieces otra partida volveré a ayudarte sin spoilers.', '🦊');
     blip('clear');
   }
 
   function toggleRepeats(){ state.repeats=!state.repeats; updateToggle(els.repeatToggle,state.repeats,'Permitir repetir símbolo','Sin símbolos repetidos'); updateSettings(); blip('tap'); }
-  function toggleSound(){ state.sound=!state.sound; syncSoundToggles(); if(state.sound) blip('tap'); }
+  function loadPrefs(){
+    const sound = localStorage.getItem('mastermind_vyk_sound');
+    const music = localStorage.getItem('mastermind_vyk_music');
+    const sv = localStorage.getItem('mastermind_vyk_sound_volume');
+    const mv = localStorage.getItem('mastermind_vyk_music_volume');
+    const ti = localStorage.getItem('mastermind_vyk_track_index');
+    if(sound !== null) state.sound = sound === '1';
+    if(music !== null) state.music = music === '1';
+    if(sv !== null) state.soundVolume = Math.min(1, Math.max(0, Number(sv)));
+    if(mv !== null) state.musicVolume = Math.min(1, Math.max(0, Number(mv)));
+    if(ti !== null) state.trackIndex = Math.abs(parseInt(ti,10)||0) % LOFI_TRACKS.length;
+  }
+  function savePrefs(){
+    localStorage.setItem('mastermind_vyk_sound', state.sound?'1':'0');
+    localStorage.setItem('mastermind_vyk_music', state.music?'1':'0');
+    localStorage.setItem('mastermind_vyk_sound_volume', String(state.soundVolume));
+    localStorage.setItem('mastermind_vyk_music_volume', String(state.musicVolume));
+    localStorage.setItem('mastermind_vyk_track_index', String(state.trackIndex));
+  }
+  function toggleSound(){ state.sound=!state.sound; savePrefs(); syncSoundToggles(); if(state.sound) blip('tap'); }
+  function toggleMusic(){ state.music=!state.music; savePrefs(); syncMusicToggles(); if(state.music){ startMusic(); blip('good'); } else { stopMusic(); blip('clear'); } }
+  function setSoundVolume(v){ state.soundVolume = Math.min(1, Math.max(0, v)); savePrefs(); syncVolumeControls(); if(state.sound) blip('tap'); }
+  function setMusicVolume(v){ state.musicVolume = Math.min(1, Math.max(0, v)); savePrefs(); syncVolumeControls(); applyMusicVolume(); }
+  function nextTrack(){ state.trackIndex = (state.trackIndex + 1) % LOFI_TRACKS.length; musicBeat = 0; musicBars = 0; savePrefs(); syncTrackName(); if(state.music){ stopMusic(); setTimeout(startMusic, 120); } blip('good'); }
   function syncSoundToggles(){ updateToggle(els.soundToggle,state.sound,'Sonidos activados','Sonidos desactivados'); updateToggle(els.soundToggleGame,state.sound,'Sonidos activados','Sonidos desactivados'); }
-  function updateToggle(el,on,yes,no){ el.classList.toggle('on',on); el.setAttribute('aria-pressed',String(on)); el.querySelector('span:first-child').textContent=on?yes:no; }
+  function syncMusicToggles(){ updateToggle(els.musicToggle,state.music,'Música activada','Música desactivada'); updateToggle(els.musicToggleGame,state.music,'Música activada','Música desactivada'); }
+  function syncVolumeControls(){
+    const sv=Math.round(state.soundVolume*100), mv=Math.round(state.musicVolume*100);
+    [els.soundVolume, els.soundVolumeGame].forEach(el=>{ if(el && Number(el.value)!==sv) el.value=sv; });
+    [els.musicVolume, els.musicVolumeGame].forEach(el=>{ if(el && Number(el.value)!==mv) el.value=mv; });
+    if(els.soundVolumeLabel) els.soundVolumeLabel.textContent=sv+'%'; if(els.soundVolumeLabelGame) els.soundVolumeLabelGame.textContent=sv+'%';
+    if(els.musicVolumeLabel) els.musicVolumeLabel.textContent=mv+'%'; if(els.musicVolumeLabelGame) els.musicVolumeLabelGame.textContent=mv+'%';
+  }
+  function syncTrackName(){ const name=LOFI_TRACKS[state.trackIndex]?.name || 'Lofi'; if(els.trackNameHome) els.trackNameHome.textContent=name; if(els.trackNameGame) els.trackNameGame.textContent=name; }
+  function updateToggle(el,on,yes,no){ if(!el) return; el.classList.toggle('on',on); el.setAttribute('aria-pressed',String(on)); el.querySelector('span:first-child').textContent=on?yes:no; }
   function updateSettings(){
     state.difficulty = DIFFICULTIES.find(d=>d.id===els.difficulty.value) || DIFFICULTIES[1]; state.mode=els.mode.value;
     state.available = SYMBOLS[state.mode].slice(0,state.difficulty.pool);
@@ -234,7 +292,7 @@
   function updatePetEconomyUI(){ if(els.cookieCount) els.cookieCount.textContent = `${formatNumber(state.cookies)} 🍪`; if(els.winReward) els.winReward.textContent = `+${cookieReward()} 🍪`; if(els.revealCost) els.revealCost.textContent = revealPrice(); renderRevealedList(); }
   function statsKey(){ return `mastermind_vyk_${els.difficulty.value}_${els.mode.value}_${state.repeats?'rep':'norep'}`; }
   function newGame(){
-    unlockAudio(); updateSettings(); closeDrawer(); els.app.classList.add('gameActive'); state.secret = makeSecret(); state.current = Array(state.difficulty.len).fill(null); state.rows=[]; state.turn=1; state.selectedSlot=0; state.playing=true; state.over=false; state.revealedPositions=[];
+    unlockAudio(); if(state.music) startMusic(); updateSettings(); closeDrawer(); els.app.classList.add('gameActive'); state.secret = makeSecret(); state.current = Array(state.difficulty.len).fill(null); state.rows=[]; state.turn=1; state.selectedSlot=0; state.playing=true; state.over=false; state.revealedPositions=[];
     renderAll(); setMessage(`Partida iniciada: ${state.difficulty.name}. Rellena la fila brillante y pulsa Comprobar.`, ''); setMascot(`Estoy lista. Primer consejo: empieza con ${state.difficulty.len} símbolos distintos para descubrir presencia antes de buscar posiciones.`, '🦊'); blip('start');
   }
   function makeSecret(){ const arr=[]; const pool=[...state.available]; for(let i=0;i<state.difficulty.len;i++){ const idx=Math.floor(Math.random()*pool.length); arr.push(pool[idx]); if(!state.repeats) pool.splice(idx,1); } return arr; }
@@ -259,7 +317,7 @@
       const fb=document.createElement('div'); fb.className='feedback'; const pegs=rowData ? makePegs(rowData.exact,rowData.near,state.difficulty.len) : makePegs(0,0,state.difficulty.len); pegs.forEach(p=>fb.appendChild(p));
       row.appendChild(slots); row.appendChild(fb); els.rows.appendChild(row);
     }
-    els.turnInfo.textContent = state.playing && !state.over ? `Intento ${state.turn} de ${state.difficulty.tries}` : 'Configura y empieza una partida.';
+    els.turnInfo.textContent = state.playing && !state.over ? `Intento ${state.turn} de ${state.difficulty.tries}` : 'Elige una dificultad y pulsa Empezar partida.';
   }
   function makePegs(exact,near,len){ const pegs=[]; for(let i=0;i<len;i++){ const p=document.createElement('span'); p.className='peg'+(i<exact?' exact':i<exact+near?' near':''); pegs.push(p); } return pegs.sort((a,b)=> (b.className.includes('exact')?2:b.className.includes('near')?1:0) - (a.className.includes('exact')?2:a.className.includes('near')?1:0)); }
   function renderPalette(){
@@ -403,7 +461,7 @@
     if(!spendCookies(cost)){ setMascot(`Necesitas <strong>${cost} 🍪</strong> para revelar un símbolo. Ahora tienes <strong>${formatNumber(state.cookies)} 🍪</strong>. Gana partidas para alimentar a Mindy.`, '🍪'); blip('error'); return; }
     const pos = hidden[Math.floor(Math.random()*hidden.length)];
     state.revealedPositions.push(pos); state.revealedPositions.sort((a,b)=>a-b);
-    renderSecret(false); updatePetEconomyUI(); updateButtons();
+    renderSecret(false); updatePetEconomyUI();
     setMascot(`Ñam. He comido <strong>${cost} 🍪</strong> y he revelado la posición <strong>${pos+1}</strong>: ${formatCombo([state.secret[pos]])}.<small>Esto se tendrá en cuenta también en mis próximas pistas inteligentes.</small>`, '🦊');
     setMessage(`Mindy ha revelado un símbolo en la posición ${pos+1}.`, 'good'); blip('good');
   }
@@ -437,9 +495,126 @@
   function shakeBoard(){ $('.board').classList.remove('shake'); void $('.board').offsetWidth; $('.board').classList.add('shake'); }
   function shade(hex, percent){ const n=parseInt(hex.slice(1),16), amt=Math.round(2.55*percent), R=(n>>16)+amt, G=(n>>8&255)+amt, B=(n&255)+amt; return '#'+(0x1000000+(R<255?R<1?0:R:255)*0x10000+(G<255?G<1?0:G:255)*0x100+(B<255?B<1?0:B:255)).toString(16).slice(1); }
   function isLight(hex){ const n=parseInt(hex.slice(1),16), r=n>>16, g=n>>8&255, b=n&255; return (r*299+g*587+b*114)/1000>150; }
+
+  function startMusic(){
+    if(!state.music) return;
+    try{
+      unlockAudio();
+      if(musicTimer) return;
+      musicMaster = audioCtx.createGain();
+      musicFilter = audioCtx.createBiquadFilter();
+      musicDelay = audioCtx.createDelay(1.2);
+      musicDelayGain = audioCtx.createGain();
+      musicFilter.type='lowpass';
+      musicFilter.frequency.setValueAtTime(1150, audioCtx.currentTime);
+      musicFilter.Q.setValueAtTime(.7, audioCtx.currentTime);
+      musicDelay.delayTime.setValueAtTime(.28, audioCtx.currentTime);
+      musicDelayGain.gain.setValueAtTime(.14, audioCtx.currentTime);
+      musicFilter.connect(musicMaster);
+      musicFilter.connect(musicDelay); musicDelay.connect(musicDelayGain); musicDelayGain.connect(musicMaster);
+      musicMaster.connect(audioCtx.destination);
+      musicMaster.gain.setValueAtTime(.0001, audioCtx.currentTime);
+      applyMusicVolume(.8);
+      musicBeat = 0; musicBars = 0;
+      scheduleMusicBar();
+      const track=LOFI_TRACKS[state.trackIndex]; const barMs = (60/track.bpm)*8*1000;
+      musicTimer = setInterval(scheduleMusicBar, barMs);
+    }catch(e){}
+  }
+  function stopMusic(){
+    if(musicTimer){ clearInterval(musicTimer); musicTimer=null; }
+    if(musicMaster){
+      try{
+        musicMaster.gain.cancelScheduledValues(audioCtx.currentTime);
+        musicMaster.gain.exponentialRampToValueAtTime(.0001, audioCtx.currentTime + .45);
+        const oldMaster=musicMaster, oldFilter=musicFilter, oldDelay=musicDelay, oldDelayGain=musicDelayGain;
+        setTimeout(()=>{ [oldMaster,oldFilter,oldDelay,oldDelayGain].forEach(n=>{ try{ n && n.disconnect(); }catch(e){} }); }, 650);
+      }catch(e){}
+    }
+    musicMaster=null; musicFilter=null; musicDelay=null; musicDelayGain=null;
+  }
+  function applyMusicVolume(ramp=.12){
+    if(!audioCtx || !musicMaster) return;
+    const target = Math.max(.0001, state.musicVolume * .26);
+    musicMaster.gain.cancelScheduledValues(audioCtx.currentTime);
+    musicMaster.gain.exponentialRampToValueAtTime(target, audioCtx.currentTime + ramp);
+  }
+  function scheduleMusicBar(){
+    if(!audioCtx || !musicFilter || !state.music) return;
+    const track = LOFI_TRACKS[state.trackIndex];
+    const beatDur = 60 / track.bpm;
+    const step = beatDur / 2;
+    const start = audioCtx.currentTime + .06;
+    const chordIndex = musicBars % track.progression.length;
+    const chord = track.progression[chordIndex];
+    const bass = track.bass[chordIndex];
+    playChord(chord, start, step*7.6, .040);
+    playBass(bass, start, step*2.5, .055);
+    playBass(bass*1.5, start+step*6, step*1.6, .032);
+    for(let i=0;i<16;i++){
+      const t = start + i*step;
+      const note = track.melody[(musicBeat+i)%track.melody.length];
+      if(note && (i%2===1 || i===0)) playMusicNote(note, t, step*.72, 'triangle', .030 + (i%4===1 ? .012 : 0));
+      if(i===0 || i===8) playSoftKick(t, .030);
+      if(i%4===2) playSoftSnare(t, .015);
+      if(i%2===1) playHat(t, .006);
+    }
+    // Pequeños acordes fantasmas para dar sensación de canción, no de pitido repetitivo.
+    if(musicBars%2===1){ playChord(chord.map(f=>f*2), start+step*10, step*2.4, .014); }
+    musicBeat = (musicBeat + 16) % track.melody.length;
+    musicBars++;
+    if(musicBars>0 && musicBars%16===0){ state.trackIndex=(state.trackIndex+1)%LOFI_TRACKS.length; savePrefs(); syncTrackName(); }
+  }
+  function playChord(freqs, t, dur, vol){
+    freqs.forEach((f,idx)=>{
+      const o=audioCtx.createOscillator(), g=audioCtx.createGain(), p=audioCtx.createStereoPanner();
+      o.type='triangle'; o.frequency.setValueAtTime(f, t); o.detune.setValueAtTime((idx-1)*4, t);
+      p.pan.setValueAtTime((idx-1)*.22, t);
+      g.gain.setValueAtTime(.0001,t);
+      g.gain.linearRampToValueAtTime(vol, t+.18);
+      g.gain.exponentialRampToValueAtTime(.0001, t+dur);
+      o.connect(g).connect(p).connect(musicFilter); o.start(t); o.stop(t+dur+.08);
+    });
+  }
+  function playBass(freq, t, dur, vol){
+    const o=audioCtx.createOscillator(), g=audioCtx.createGain();
+    o.type='sine'; o.frequency.setValueAtTime(freq,t);
+    g.gain.setValueAtTime(.0001,t); g.gain.linearRampToValueAtTime(vol,t+.05); g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    o.connect(g).connect(musicFilter); o.start(t); o.stop(t+dur+.05);
+  }
+  function playMusicNote(freq, t, dur, type, vol){
+    const o=audioCtx.createOscillator(), g=audioCtx.createGain(), p=audioCtx.createStereoPanner();
+    o.type=type; o.frequency.setValueAtTime(freq,t); p.pan.setValueAtTime((Math.random()-.5)*.35,t);
+    g.gain.setValueAtTime(.0001,t); g.gain.linearRampToValueAtTime(vol,t+.035); g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    o.connect(g).connect(p).connect(musicFilter); o.start(t); o.stop(t+dur+.08);
+  }
+  function playSoftKick(t, vol){
+    const o=audioCtx.createOscillator(), g=audioCtx.createGain();
+    o.type='sine'; o.frequency.setValueAtTime(92,t); o.frequency.exponentialRampToValueAtTime(48,t+.16);
+    g.gain.setValueAtTime(.0001,t); g.gain.linearRampToValueAtTime(vol,t+.012); g.gain.exponentialRampToValueAtTime(.0001,t+.22);
+    o.connect(g).connect(musicFilter); o.start(t); o.stop(t+.25);
+  }
+  function playSoftSnare(t, vol){ playNoise(t,.12,vol,900); }
+  function playHat(t, vol){ playNoise(t,.045,vol,4200); }
+  function playNoise(t, dur, vol, filterFreq){
+    const buffer = audioCtx.createBuffer(1, Math.max(1, Math.floor(audioCtx.sampleRate*dur)), audioCtx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for(let i=0;i<data.length;i++) data[i]=(Math.random()*2-1) * (1-i/data.length);
+    const src=audioCtx.createBufferSource(), f=audioCtx.createBiquadFilter(), g=audioCtx.createGain();
+    src.buffer=buffer; f.type='bandpass'; f.frequency.setValueAtTime(filterFreq,t); f.Q.setValueAtTime(.8,t);
+    g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    src.connect(f).connect(g).connect(musicFilter); src.start(t); src.stop(t+dur+.02);
+  }
   function unlockAudio(){ if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)(); if(audioCtx.state==='suspended') audioCtx.resume(); }
   function blip(kind){
-    if(!state.sound) return; try{ unlockAudio(); const now=audioCtx.currentTime; const patterns={ tap:[[520,.035]], clear:[[260,.045],[320,.045]], start:[[392,.06],[523,.07]], good:[[659,.06],[784,.08]], error:[[140,.08],[110,.09]], win:[[523,.08],[659,.08],[784,.12],[1046,.18]], lose:[[220,.12],[174,.16]] }[kind] || [[440,.05]]; let t=now; patterns.forEach(([freq,dur])=>{ const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.type='sine'; o.frequency.value=freq; g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.12,t+.01); g.gain.exponentialRampToValueAtTime(.0001,t+dur); o.connect(g).connect(audioCtx.destination); o.start(t); o.stop(t+dur+.02); t+=dur+.025; }); }catch(e){}
+    if(!state.sound) return;
+    try{
+      unlockAudio();
+      const now=audioCtx.currentTime;
+      const patterns={ tap:[[420,.035]], clear:[[260,.045],[320,.045]], start:[[349,.06],[440,.07]], good:[[523,.06],[659,.08]], error:[[130,.08],[110,.09]], win:[[392,.08],[523,.08],[659,.12],[784,.18]], lose:[[220,.12],[174,.16]] }[kind] || [[440,.05]];
+      let t=now;
+      patterns.forEach(([freq,dur])=>{ const o=audioCtx.createOscillator(), g=audioCtx.createGain(); o.type='sine'; o.frequency.value=freq; g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.11*state.soundVolume,t+.012); g.gain.exponentialRampToValueAtTime(.0001,t+dur); o.connect(g).connect(audioCtx.destination); o.start(t); o.stop(t+dur+.02); t+=dur+.025; });
+    }catch(e){}
   }
   init();
 })();
